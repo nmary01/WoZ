@@ -90,7 +90,7 @@ public class Game
         well.setExits("south",garden, true);
         gardenerhut.setExits("west",garden, true);
         gardenerhut.setExits("down",anteroom, false);
-        //-1//
+        //-1// 
         anteroom.setExits("south",ritualroom, true);
         anteroom.setExits("up",gardenerhut, false);
         anteroom.setExits("west",cellar, true);
