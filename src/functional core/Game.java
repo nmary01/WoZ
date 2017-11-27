@@ -1,4 +1,5 @@
 
+
 /**
  *  This class is the main class of the "World of Zuul" application.
  *  "World of Zuul" is a very simple, text based adventure game.  Users
@@ -111,8 +112,9 @@ public class Game {
         bedroom.setExits("north", corridor, true);
         guestbedroom.setExits("east", corridor, true);
         attic.setExits("down", corridor, true);
+        
+        currentRoom = poolroom;//Start the game in the poolroom
 
-        currentRoom = poolroom;  // start game outside
     }
 
     public void createCharacters() {
@@ -242,13 +244,25 @@ public class Game {
         createCharacters();
         createItem();
         Player player = new Player("player");
+        Boolean exam;
+        exam = false;
+        
 
         // Step 1 : start in the poolroom //
+        Boolean step1Finish;
+        Boolean step2Finish;
+        step1Finish = false;
+        step2Finish = false;
         // All the characters are in the poolroom and the exit opens only after speak with all the characters //
+        Boolean speakEveryone;
         Boolean speak_with_mr_Taylor, speak_with_ms_Taylor, speak_with_ms_Cunningham, speak_with_chambermaid, speak_with_bob_Taylor, speak_with_mr_Cunningham;
         Boolean speak_with_ms_Wellington, speak_with_valet, speak_with_caretaker, speak_with_mr_Wellington, speak_with_nina_Taylor;
-        Boolean exam_room, exam_dead;
-
+        Boolean find_bob_Taylor;
+        Boolean toys_not_front_of_door;
+        Boolean firstEnter;
+        firstEnter = true;
+        
+        speakEveryone = false;
         speak_with_mr_Taylor = false;
         speak_with_ms_Taylor = false;
         speak_with_ms_Cunningham = false;
@@ -260,43 +274,112 @@ public class Game {
         speak_with_caretaker = false;
         speak_with_mr_Wellington = false;
         speak_with_nina_Taylor = false;
-        exam_room = false;
-        exam_dead = false;
 
-        if (speak_with_mr_Taylor && speak_with_ms_Taylor && speak_with_ms_Cunningham && speak_with_chambermaid && speak_with_bob_Taylor && speak_with_mr_Cunningham
-                && speak_with_ms_Wellington && speak_with_valet && speak_with_caretaker && speak_with_mr_Wellington && speak_with_nina_Taylor && exam_room && exam_dead) // Doit ajouter en plus que le joueur doit examiner la pièce et le corps
+        if (exam)
         {
+            System.out.println("You are in the poolroom. \n"
+            + "Mr Taylor was founded by the Chambermaid this morning when she came to clean the poolroom. Her scream attracted everyone. \n"
+            + "You notice that it is missing a pool cue and you find a strange red necklace nearby the pool. \n"
+            + "You examine the dead body and you notice a circular wound with the same diameter of a pool cue and some splinters of wood at the bottom of the neck. \n"
+            + "Take advantage that everyone is here to question them.");
+            speakEveryone = true;
+            exam = false;
+        }
+        if (speakEveryone)
+        {
+            //permettre de parler aux PNG
+            speakEveryone = false;
+        }
+        if (speak_with_mr_Taylor && speak_with_ms_Taylor && speak_with_ms_Cunningham && speak_with_chambermaid && speak_with_bob_Taylor && speak_with_mr_Cunningham
+                && speak_with_ms_Wellington && speak_with_valet && speak_with_caretaker && speak_with_mr_Wellington && speak_with_nina_Taylor && exam) // Doit ajouter en plus que le joueur doit examiner la pièce et le corps
+        {
+            step1Finish = true;
             poolroom.modifyExit("east");
         }
 
         // Step 2 : banqueting hall //
-        Boolean toys_not_front_of_door = false; //false = toys front of the door // true = toys not front of the door
-        Boolean find_bob_Taylor = false;
-        System.out.println(" When you opened the poolroom door, you shut on a toy so you lose one HealthPoint");
-        player.setHP(player.getHP() - 1);
-        System.out.println("You cannot open the dancing room door now because there are a lot of toys");
-        nina_Taylor.setRoom(banquetinghall);
-        nina_Taylor.setText("These are my brother toys. Find him to tidy his toys");
+        if (step1Finish)
+        {
+         bob_Taylor.setRoom(cellar);
+         nina_Taylor.setRoom(banquetinghall);
+         ms_Cunningham.setRoom(dancingroom);
+            if (currentRoom == banquetinghall)
+            {
+             if (firstEnter)
+             { 
+                toys_not_front_of_door = false; //false = toys front of the door // true = toys not front of the door
+                find_bob_Taylor = false;
+                System.out.println(" When you opened the poolroom door, you shut on a toy so you lose one HealthPoint");
+                player.setHP(player.getHP() - 1);
+                firstEnter = false;
+             }
+                if (exam)
+                {
+                System.out.println("You cannot open the dancing room door now because there are a lot of toys. \n"
+                                 + "Nina Taylor is next to the toys and you can speak with her. ");
+                speakEveryone = true;
+                exam = false;
+                }
+                if (speakEveryone)
+                {
+                nina_Taylor.setText("These are my brother toys. Find him to tidy his toys");
+                speakEveryone = false;
+                }
+                
 
-        // Step 2 bis : Hall //
-        //if the player examine the place
-        //System.out.println(" You are in the hall but there is nobody here. ");
-        
-        // Step 3 : kitchen //
-        //if the player examine the place
-        //System.out.println(" This is the kitchen, Bob Taylor is not here. ");
-        //System.out.println(" A set of forks and knives is in one of the cupboards of the kitchen. ");
-        
-        // Step 4 : cellar //
-        //if the player examine the place
-        System.out.println("You found Bob Taylor in the back of the cellar");
-        find_bob_Taylor = true;
-        toys_not_front_of_door = true;
-
-        // Step 5 :  banqueting hall //
-        if (toys_not_front_of_door) {
-            banquetinghall.modifyExit("south");
-
+            }
+            else if (currentRoom == hall)
+            {
+            // Step 2 bis : Hall //
+                if (exam)
+                {
+                System.out.println(" You are in the hall but there is nobody here. ");
+                exam = false;
+                }
+            }
+            else if (currentRoom == poolroom)
+            {
+                if (exam)
+                {
+                System.out.println("You are in the poolroom. Mr Taylor's body was removed. All the peopple are gone. \n"
+                + "You do not want to stay in this room. The atmosphere has become bad. You want to leave.");
+                exam = false;
+                }
+            }
+            else if (currentRoom == kitchen)
+            {
+                if (exam)
+                {
+                    System.out.println("This is the kitchen, Bob Taylor is not here. \n"
+                            + "A set of forks and knives is in one of the cupboards of the kitchen.");
+                    exam = false;
+                }
+            }
+            else if (currentRoom == cellar)
+            {
+                if (exam)
+                {
+                 System.out.println("You found Bob Taylor in the back of the cellar");
+                 find_bob_Taylor = true;
+                 toys_not_front_of_door = true;
+                 exam = false;
+                step2Finish = true;
+                }
+                if (toys_not_front_of_door) 
+                {
+                    banquetinghall.modifyExit("south");
+                }
+            }
+        if (step2Finish)
+        {
+        if (currentRoom == dancingroom)
+        {
+            if (exam)
+            {
+                System.out.println("You are in an extraordinary dancing room. You perceive a gramophone on a commode. \n"
+                + "A finely wrought candlestick illuminate this room. Ms Cunningham stands next to the gramophone.");
+                exam = false;
+            }
         }
         // the player can now open the dancing room door
 
