@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import java.awt.event.*;
 import javax.swing.*;
 
 /**
@@ -20,7 +21,7 @@ public class Display extends JFrame {
     private JMenu menu1, menu2, menu3, menu4, menu5;
     private JButton examiner, prendre, oui, non, parler, journal, haut, bas, nord, sud, est, ouest;
     private JPanel beginning, display, interaction, action, inventory, moves, direction, floor, diary_hp, item, player, textAreaLayout, image, northPanel, southPanel, westPanel, eastPanel, upPanel, downPanel, journalPanel;
-    private JLabel hp, inventaire;
+    private JLabel hp, inventaire, screen;
     private JTextArea textArea;
     private String text;
     private JLayeredPane stackImages;
@@ -30,7 +31,9 @@ public class Display extends JFrame {
     /**
      * Constructeur d'objets de classe Display
      */
-    public Display(Game g) {
+    public Display(Game g) {}
+    
+    public void generateDisplay(Game g){
 
         this.setTitle("AMONG US");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -108,13 +111,55 @@ public class Display extends JFrame {
         // boutons
         // interactions
         examiner = new JButton("Examine");
+        examiner.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt)
+            {
+                
+            }
+        });
+        
         prendre = new JButton("Take");
+        prendre.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt)
+            {
+                
+            }
+        });
+        
         parler = new JButton("Speak to");
+        parler.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt)
+            {
+                
+            }
+        });
+        
         oui = new JButton("Yes");
+        oui.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt)
+            {
+                
+            }
+        });
+        
         non = new JButton("No");
+        non.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt)
+            {
+                
+            }
+        });
+        
 
         // journal
         journal = new JButton("Diary");
+        journal.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt)
+            {
+                
+            }
+        });
+        
         journalPanel = new JPanel();
         journalPanel.setLayout(new BoxLayout(journalPanel, BoxLayout.X_AXIS));
         journalPanel.setSize(100,100);
@@ -168,14 +213,71 @@ public class Display extends JFrame {
         downPanel.setPreferredSize(new Dimension(100, 100));
 
         nord = new JButton(north);
+        nord.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt)
+            {
+               Command co=new Command("go","north");
+               g.goRoom(co);
+               deplacement(g);
+            }
+        });
+        
         sud = new JButton(south);
+        sud.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt)
+            {
+                Command co=new Command("go","south");
+                g.goRoom(co);
+                deplacement(g);
+            }
+        });
+        
         est = new JButton(east);
+        est.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt)
+            {
+                Command co=new Command("go","east");
+                g.goRoom(co);
+                deplacement(g);
+                //screen = new JLabel(new ImageIcon(background));
+                //screen.revalidate();
+                //image.add(screen);
+                //SwingUtilities.updateComponentTreeUI(frame);
+                
+            }
+        });
+        
         ouest = new JButton(west);
+        ouest.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt)
+            {
+                Command co=new Command("go","west");
+                g.goRoom(co);
+                deplacement(g);
+            }
+        });
         
 
         // étage
         haut = new JButton(upstairs);
+        haut.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt)
+            {
+                Command co=new Command("go","up");
+                g.goRoom(co);
+                deplacement(g);
+            }
+        });
+        
         bas = new JButton(downstairs);
+        bas.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt)
+            {
+                Command co=new Command("go","down");
+                g.goRoom(co);
+                deplacement(g);
+            }
+        });
 
 
         // inventaire
@@ -233,7 +335,7 @@ public class Display extends JFrame {
 
         //gestion Panel
         //ImageIcon ij = new ImageIcon(background);
-        JLabel screen = new JLabel(new ImageIcon(background));
+        screen = new JLabel(new ImageIcon(background));
         image.add(screen);
         //image.add(image_manoir);
         //stackImages.add(image);
@@ -348,6 +450,20 @@ public class Display extends JFrame {
             }
         }
         return background;
+    }
+    
+    public void deplacement(Game g)
+    {
+        remove(image);
+        remove(display);
+        remove(moves);
+        remove(direction);
+        remove(floor);
+        remove(menuBar);
+        remove(player);
+
+        background = displayRoom(g);
+        generateDisplay(g);
     }
     
 }
