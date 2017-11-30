@@ -12,25 +12,7 @@ import javax.swing.*;
  * This class represent the display of the game
  *
  * @author (WOZGrp4)
- * @version (21/11/2017)
- *
- *Game:
- *  instantiations rooms à modifier (remplacer null par chemin vers image)
- *  ajout getCurrent() !
- *  ajout attribut PLAYER
- *  instantiation du joueur au debut de play()
- *  getPlayer()
- *  IL FAUT MODIFIER TOUS LES ITEMS POUR QU'ILS SOIENT DES ATTRIBUTS !!!!
- * 
- *Player:
- *  Suppression des méthodes addWeapon(), addKeys(), addPotion(), canTakeWeapon(), canTakeItem()
- *  Généralisation de addItem() pour que tout fonctionne bien (ajout de une seule arme possible)
- * 
- *Display:
- *  Pleeeeeein de modif
- *  Ajustement des différents panels
- *  Création de l'inventaire (avec la méthode getItems())
- *  Ajout d'infobulles au survol sur les items
+ * @version (30/11/2017)
  */
 public class Display extends JFrame {
 
@@ -46,7 +28,7 @@ public class Display extends JFrame {
     //private Image img;
 
     /**
-     * Constructeur d'objets de classe Interface
+     * Constructeur d'objets de classe Display
      */
     public Display(Game g) {
 
@@ -102,7 +84,6 @@ public class Display extends JFrame {
         //Partie de Droite
         player = new JPanel(); // Partie inventaire, moves et diary_hp
         player.setLayout(new GridLayout(3,1));
-        //player.setLayout(new BoxLayout(player, BoxLayout.Y_AXIS));
 
         inventory = new JPanel(); // comprend le bouton inventaire et les 4 images des objets
         inventory.setLayout(new BoxLayout(inventory, BoxLayout.Y_AXIS));
@@ -353,8 +334,8 @@ public class Display extends JFrame {
         BufferedImage background = new BufferedImage(newing.getWidth(null), newing.getHeight(null),BufferedImage.TYPE_INT_RGB);
         background.getGraphics().drawImage(newing, 0, 0, null);
         
-        int x= 50;
-        int y=300;
+        int x= 20;
+        int y=200;
         
         for (PNG png: g.getListOfPNG())
         {
@@ -363,7 +344,7 @@ public class Display extends JFrame {
                 ImageIcon imgI = new ImageIcon(getClass().getResource(png.getPicture()));
                 Image img = imgI.getImage();
                 background.getGraphics().drawImage(img, x,y, img.getWidth(null)/2, img.getHeight(null)/2, null);
-                x+=50;
+                x+=100;
             }
         }
         return background;
