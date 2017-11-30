@@ -3,9 +3,6 @@ package display;
 import core.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -20,21 +17,26 @@ public class Display extends JFrame {
     private JMenuBar menuBar;
     private JMenu menu1, menu2, menu3, menu4, menu5;
     private JButton examiner, prendre, oui, non, parler, journal, haut, bas, nord, sud, est, ouest;
-    private JPanel beginning, display, interaction, action, inventory, moves, direction, floor, diary_hp, item, player, textAreaLayout, image, northPanel, southPanel, westPanel, eastPanel, upPanel, downPanel, journalPanel;
+    private JPanel display, interaction, action, inventory, moves, direction, floor, diary_hp, item, player, textAreaLayout, image, northPanel, southPanel, westPanel, eastPanel, upPanel, downPanel, journalPanel;
     private JLabel hp, inventaire, screen;
     private JTextArea textArea;
     private String text;
-    private JLayeredPane stackImages;
     private BufferedImage background;
+    private DisplaySpeak displaySpeak;
+    private JScrollPane scroll;
+    private Game g;
     //private Image img;
 
     /**
      * Constructeur d'objets de classe Display
      */
-    public Display(Game g) {}
+    public Display(Game g) {
+        this.g=g;
+        //text = "Welcome to the WOLOLO World. J'ai décidé de parler français parce que c'est plus simple pour tout le monde. Alors la, comme tu peux le voir, l'interface est pas terminée mais ca avance peu à peu. Peut-être qu'un jour elle sera focntionnelle";
+    }
     
     public void generateDisplay(Game g){
-
+        Display frame=this;
         this.setTitle("AMONG US");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
@@ -130,7 +132,7 @@ public class Display extends JFrame {
         parler.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt)
             {
-                
+                displaySpeak=new DisplaySpeak(frame);
             }
         });
         
@@ -285,11 +287,13 @@ public class Display extends JFrame {
         inventaire.setFont(new Font("SansSerif", Font.PLAIN, 30));
 
         // labels
-        text = "Welcome to the WOLOLO World. J'ai décidé de parler français parce que c'est plus simple pour tout le monde. Alors la, comme tu peux le voir, l'interface est pas terminée mais ca avance peu à peu. Peut-être qu'un jour elle sera focntionnelle";
-        textArea = new JTextArea(text);
+        
+        setTextArea(text);
         textArea.setLineWrap(true);
         textArea.setEditable(false);
         textArea.setMaximumSize(new Dimension(900,150));
+        //scroll = new JScrollPane(textArea);
+        //scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         hp = new JLabel("HP: "+Integer.toString(g.getPlayer().getHP()));
         hp.setFont(new Font("SansSerif", Font.PLAIN, 40));
@@ -345,6 +349,7 @@ public class Display extends JFrame {
         interaction.add(textAreaLayout);
         interaction.add(action);
         textAreaLayout.add(textArea);
+        //textAreaLayout.add(scroll);
         player.add(inventory);
         player.add(moves);
         player.add(diary_hp);
@@ -398,7 +403,7 @@ public class Display extends JFrame {
     
     public void setTextArea(String s)
     {
-        text=s;
+        textArea = new JTextArea(s);
     }
 
     public JPanel getItems (Game g)
@@ -461,10 +466,22 @@ public class Display extends JFrame {
         remove(floor);
         remove(menuBar);
         remove(player);
+        
 
         background = displayRoom(g);
         generateDisplay(g);
     }
+    
+
+    public Game getG() {
+        return g;
+    }
+
+    public JTextArea getTextArea() {
+        return textArea;
+    }
+    
+    
     
 }
 
