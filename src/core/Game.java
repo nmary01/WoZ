@@ -29,7 +29,7 @@ public class Game
     private Room attic;
     private Neutral mr_Taylor, ms_Taylor, ms_Cunningham;
     private Ally chambermaid, bob_Taylor, mr_Cunningham, ms_Wellington;
-    private Enemy valet, caretaker, mr_Wellington, nina_Taylor; 
+    private Enemy valet, caretaker, mr_Wellington, nina_Taylor, ghost; 
     private Player player;
     private Item necklace_red, gramophone, candelar;
     private Potion potion2HP, potion6HP;
@@ -124,7 +124,7 @@ public class Game
         attic.setExits("down",corridor, true);
         
         //currentRoom = poolroom;  // start game outside
-        currentRoom = poolroom;
+        currentRoom = banquetinghall;
     }
 
     public void createCharacters()
@@ -294,7 +294,7 @@ public class Game
         Boolean speak_with_mr_Taylor, speak_with_ms_Taylor, speak_with_ms_Cunningham, speak_with_chambermaid, speak_with_bob_Taylor, speak_with_mr_Cunningham;
         Boolean speak_with_ms_Wellington, speak_with_valet, speak_with_caretaker, speak_with_mr_Wellington, speak_with_nina_Taylor;
         Boolean find_bob_Taylor;
-        Boolean toys_not_front_of_door;
+        Boolean toys_not_front_of_door = null;
         Boolean firstEnter;
         firstEnter = true;
         
