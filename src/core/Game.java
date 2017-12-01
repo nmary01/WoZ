@@ -490,6 +490,7 @@ public class Game
                 }
                 }
         }
+        
         if (step3Finish)
         {
             if (currentRoom == library)
