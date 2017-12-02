@@ -82,56 +82,56 @@ public class Game
             
         // initialise room exits
         //RDC
-        hall.setExits("north",garden, false);
-        hall.setExits("south",banquetinghall, true);  
-        banquetinghall.setExits("north",hall, true);
-        banquetinghall.setExits("south",dancingroom, false);
-        banquetinghall.setExits("east",kitchen, true);
-        banquetinghall.setExits("west",poolroom, true);
-        poolroom.setExits("east",banquetinghall, false);
-        dancingroom.setExits("north",banquetinghall, true);
-        dancingroom.setExits("up",livingroom, true);
-        kitchen.setExits("west",banquetinghall, true);
-        kitchen.setExits("down",cellar, true);
-        garden.setExits("south",hall, true);
-        garden.setExits("north",well, true);
-        garden.setExits("east",gardenerhut, true);
-        well.setExits("south",garden, true);
-        gardenerhut.setExits("west",garden, true);
-        gardenerhut.setExits("down",anteroom, false);
+        hall.setExits("north",garden, false, "> You must explore the mansion before");
+        hall.setExits("south",banquetinghall, true, null);  
+        banquetinghall.setExits("north",hall, true, null);
+        banquetinghall.setExits("south",dancingroom, false, "> The door is blocked by Bob's toys");
+        banquetinghall.setExits("east",kitchen, true, null);
+        banquetinghall.setExits("west",poolroom, true, null);
+        poolroom.setExits("east",banquetinghall, false, "> You have not finished examining the crime scene");
+        dancingroom.setExits("north",banquetinghall, true, null);
+        dancingroom.setExits("up",livingroom, true, null);
+        kitchen.setExits("west",banquetinghall, true, null);
+        kitchen.setExits("down",cellar, true, null);
+        garden.setExits("south",hall, true, null);
+        garden.setExits("north",well, true, null);
+        garden.setExits("east",gardenerhut, true, null);
+        well.setExits("south",garden, true, null);
+        gardenerhut.setExits("west",garden, true, null);
+        //gardenerhut.setExits("down",anteroom, false, null);
         //-1// 
-        anteroom.setExits("south",ritualroom, true);
-        anteroom.setExits("up",gardenerhut, false);
-        anteroom.setExits("west",cellar, true);
-        ritualroom.setExits("north",anteroom, true);
-        cellar.setExits("up",kitchen, true);
+        anteroom.setExits("south",ritualroom, true, null);
+        anteroom.setExits("up",gardenerhut, false, "> The door is locked. You cannot go backward");
+        anteroom.setExits("west",cellar, true, null);
+        ritualroom.setExits("north",anteroom, true, null);
+        cellar.setExits("up",kitchen, true, null);
         //cellar.setExits("east", anteroom, false); To unlock
         //+1//
-        livingroom.setExits("down",dancingroom, true);
-        livingroom.setExits("north",library, true);
-        livingroom.setExits("west",corridor, true);
-        library.setExits("south",livingroom, true);
+        livingroom.setExits("down",dancingroom, true, null);
+        livingroom.setExits("north",library, true, null);
+        livingroom.setExits("west",corridor, true, null);
+        library.setExits("south",livingroom, true, null);
         //library.setExits("north",laboratory, false); To unlock
-        laboratory.setExits("south",library, true);
-        corridor.setExits("north",bathroom, true);
-        corridor.setExits("south",bedroom, false);
-        corridor.setExits("east",livingroom, true);
-        corridor.setExits("west",guestbedroom, true);
-        corridor.setExits("up",attic, false);
-        bathroom.setExits("south",corridor, true);
-        bedroom.setExits("north",corridor, true);
-        guestbedroom.setExits("east",corridor, true);
-        attic.setExits("down",corridor, true);
+        laboratory.setExits("south",library, true, null);
+        corridor.setExits("north",bathroom, true, null);
+        corridor.setExits("south",bedroom, false, "> The door is locked. A key may be mandatory");
+        corridor.setExits("east",livingroom, true, null);
+        corridor.setExits("west",guestbedroom, true, null);
+        corridor.setExits("up",attic, false, "> You see a weird lock in the ceiling");
+        bathroom.setExits("south",corridor, true, null);
+        bedroom.setExits("north",corridor, true, null);
+        guestbedroom.setExits("east",corridor, true, null);
+        attic.setExits("down",corridor, true, null);
         
         //currentRoom = poolroom;  // start game outside
-        currentRoom = banquetinghall;
+        currentRoom = poolroom;
     }
 
     public void createCharacters()
     {
         
         
-        Room poolroom = new Room ("PoolRoom", null);
+        //Room poolroom = new Room ("PoolRoom", null);
         Item item_chambermaid = new Item("Broom","The brush that she uses");
         Item item_bob_taylor = new Item("Toys","Bob Taylor toys");
         Item item_mr_Cunningham = new Item("Black hat","The nice hat of Mr Cunningham");
@@ -144,7 +144,7 @@ public class Game
         
         // Ally characters creation //
         chambermaid = new Ally("Chambermaid","I was in the dancing room to serve the guests.I was not with the master", poolroom, item_chambermaid, "..\\pictures\\Characters\\Chambermaid2.png");
-        bob_Taylor = new Ally("Bob Taylor","What happended to my father ? ", poolroom, item_bob_taylor, "..\\pictures\\Characters\\BobTaylor2.png");
+        bob_Taylor = new Ally("Bob Taylor","What happened to my father ? ", poolroom, item_bob_taylor, "..\\pictures\\Characters\\BobTaylor2.png");
         mr_Cunningham = new Ally("Mr Cunningham", "I was in my bedroom when I heard someone screaming. So I went down stairs quickly", poolroom, item_mr_Cunningham, "..\\pictures\\Characters\\MrCunningham2.png");
         ms_Wellington = new Ally("Ms Wellington", "I was in the dancing room with my husband. The chambermaid served us.", poolroom, item_ms_Wellington, "..\\pictures\\Characters\\MsWellington2.png");
         
@@ -193,7 +193,7 @@ public class Game
         bathroom.addItem(potion6HP);
         
         // items in guestbedroom //
-        Exit exit_from_corridor_to_bedroom = new Exit("south",corridor,false);
+        Exit exit_from_corridor_to_bedroom = new Exit("south",corridor,false, null);
         bedroomkey = new Keys("Bedroom key","This key opens the master bedroom door",exit_from_corridor_to_bedroom);
         guestbedroom.addItem(bedroomkey);
         
@@ -216,7 +216,7 @@ public class Game
         library.addItem(book);
         
         // items in laboratory //
-        Exit exit_from_corridor_to_attic = new Exit("up",corridor,false);
+        Exit exit_from_corridor_to_attic = new Exit("up",corridor,false, null);
         Keys attickey = new Keys("Attic key","This key is a shaped bone from a squeletor", exit_from_corridor_to_attic); 
         laboratory.addItem(attickey);
         
