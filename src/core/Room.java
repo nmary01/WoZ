@@ -47,9 +47,9 @@ public class Room
      * to another room or is null (no exit there).
      * @param north The north exit.
      */
-    public void setExits(String direction, Room room, boolean opened) 
+    public void setExits(String direction, Room room, boolean opened, String textBlock) 
     {
-       mapRoom.add(new Exit(direction, room, opened));
+       mapRoom.add(new Exit(direction, room, opened, textBlock));
     }
 
     /**

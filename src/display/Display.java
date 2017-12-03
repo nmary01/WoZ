@@ -25,6 +25,7 @@ public class Display extends JFrame {
     private DisplaySpeak displaySpeak;
     private JScrollPane scroll;
     private Game g;
+    //private JScrollPane textAreaLayout;
     //private Image img;
 
     /**
@@ -76,6 +77,8 @@ public class Display extends JFrame {
         //image.setBounds(0,0,0,0);
 
         textAreaLayout = new JPanel();
+        //textAreaLayout = new JScrollPane(textArea);
+        //textAreaLayout.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         textAreaLayout.setLayout(new BoxLayout(textAreaLayout, BoxLayout.X_AXIS));     
 
         interaction = new JPanel(); // partie de gauche : comprend l'image et l'interaction
@@ -218,9 +221,21 @@ public class Display extends JFrame {
         nord.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt)
             {
-               Command co=new Command("go","north");
-               g.goRoom(co);
-               deplacement(g);
+               for (Exit i: g.getCurrent().getListExits())
+               {
+                   if (i.getDirection().equals("north")){
+                       if(i.getOpened())
+                       {
+                            Command co=new Command("go","north");
+                            g.goRoom(co);
+                            deplacement(g);
+                            textArea.append("> You are in the "+g.getCurrent().getDescription()+"\n");
+                            break;
+                       }
+                       else{textArea.append(i.getTextBlock()+"\n");break;}
+                   }
+               }
+
             }
         });
         
@@ -228,9 +243,20 @@ public class Display extends JFrame {
         sud.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt)
             {
-                Command co=new Command("go","south");
-                g.goRoom(co);
-                deplacement(g);
+                for (Exit i: g.getCurrent().getListExits())
+               {
+                   if (i.getDirection().equals("south")){
+                       if(i.getOpened())
+                       {
+                            Command co=new Command("go","south");
+                            g.goRoom(co);
+                            deplacement(g);
+                            textArea.append("> You are in the "+g.getCurrent().getDescription()+"\n");
+                            break;
+                       }
+                       else{textArea.append(i.getTextBlock()+"\n");break;}
+                   }
+               }
             }
         });
         
@@ -238,13 +264,20 @@ public class Display extends JFrame {
         est.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt)
             {
-                Command co=new Command("go","east");
-                g.goRoom(co);
-                deplacement(g);
-                //screen = new JLabel(new ImageIcon(background));
-                //screen.revalidate();
-                //image.add(screen);
-                //SwingUtilities.updateComponentTreeUI(frame);
+                for (Exit i: g.getCurrent().getListExits())
+               {
+                   if (i.getDirection().equals("east")){
+                       if(i.getOpened())
+                       {
+                            Command co=new Command("go","east");
+                            g.goRoom(co);
+                            deplacement(g);
+                            textArea.append("> You are in the "+g.getCurrent().getDescription()+"\n");
+                            break;
+                       }
+                       else{textArea.append(i.getTextBlock()+"\n");break;}
+                   }
+               }
                 
             }
         });
@@ -253,9 +286,20 @@ public class Display extends JFrame {
         ouest.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt)
             {
-                Command co=new Command("go","west");
-                g.goRoom(co);
-                deplacement(g);
+                for (Exit i: g.getCurrent().getListExits())
+               {
+                   if (i.getDirection().equals("west")){
+                       if(i.getOpened())
+                       {
+                            Command co=new Command("go","west");
+                            g.goRoom(co);
+                            deplacement(g);
+                            textArea.append("> You are in the "+g.getCurrent().getDescription()+"\n");
+                            break;
+                       }
+                       else{textArea.append(i.getTextBlock()+"\n");break;}
+                   }
+               }
             }
         });
         
@@ -265,9 +309,20 @@ public class Display extends JFrame {
         haut.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt)
             {
-                Command co=new Command("go","up");
-                g.goRoom(co);
-                deplacement(g);
+                for (Exit i: g.getCurrent().getListExits())
+               {
+                   if (i.getDirection().equals("up")){
+                       if(i.getOpened())
+                       {
+                            Command co=new Command("go","up");
+                            g.goRoom(co);
+                            deplacement(g);
+                            textArea.append("> You are in the "+g.getCurrent().getDescription()+"\n");
+                            break;
+                       }
+                       else{textArea.append(i.getTextBlock()+"\n");break;}
+                   }
+               }
             }
         });
         
@@ -275,9 +330,20 @@ public class Display extends JFrame {
         bas.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt)
             {
-                Command co=new Command("go","down");
-                g.goRoom(co);
-                deplacement(g);
+                for (Exit i: g.getCurrent().getListExits())
+               {
+                   if (i.getDirection().equals("down")){
+                       if(i.getOpened())
+                       {
+                            Command co=new Command("go","down");
+                            g.goRoom(co);
+                            deplacement(g);
+                            textArea.append("> You are in the "+g.getCurrent().getDescription()+"\n");
+                            break;
+                       }
+                       else{textArea.append(i.getTextBlock()+"\n");break;}
+                   }
+               }
             }
         });
 
@@ -448,10 +514,17 @@ public class Display extends JFrame {
         {
             if (png.getRoom().getDescription()==(g.getCurrent().getDescription()))
             {
-                ImageIcon imgI = new ImageIcon(getClass().getResource(png.getPicture()));
-                Image img = imgI.getImage();
-                background.getGraphics().drawImage(img, x,y, img.getWidth(null)/2, img.getHeight(null)/2, null);
-                x+=100;
+                if (png.getName()!="Bob Taylor"){
+                    ImageIcon imgI = new ImageIcon(getClass().getResource(png.getPicture()));
+                    Image img = imgI.getImage();
+                    background.getGraphics().drawImage(img, x,y, img.getWidth(null)/2, img.getHeight(null)/2, null);
+                    x+=100;}
+                else{
+                    ImageIcon imgI = new ImageIcon(getClass().getResource(png.getPicture()));
+                    Image img = imgI.getImage();
+                    background.getGraphics().drawImage(img, x,y+110, img.getWidth(null)/2, img.getHeight(null)/2, null);
+                    x+=100;}
+                    
             }
         }
         return background;
@@ -480,8 +553,5 @@ public class Display extends JFrame {
     public JTextArea getTextArea() {
         return textArea;
     }
-    
-    
-    
 }
 

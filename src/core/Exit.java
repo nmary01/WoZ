@@ -16,15 +16,17 @@ public class Exit
     private String direction;
     private Room room;
     private boolean opened;
+    private String textBlock;
     
     /**
      * Constructeur d'objets de classe Exit
      */
-    public Exit(String direction, Room room, boolean opened)
+    public Exit(String direction, Room room, boolean opened, String textBlock)
     {
         this.direction = direction;
         this.room = room;
         this.opened = opened;
+        this.textBlock=textBlock;
     }
 
     /**
@@ -64,4 +66,14 @@ public class Exit
         if (opened){opened=false;}
         else{opened=true;}
     }
+
+    public String getTextBlock() {
+        return textBlock;
+    }
+
+    public void setTextBlock(String textBlock) {
+        this.textBlock = textBlock;
+    }
+    
+    
 }

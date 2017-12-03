@@ -36,7 +36,7 @@ public class KeysTest
     public void setUp()
     {
         room = new Room("Library", null);
-        exit= new Exit("north", room, false);
+        exit= new Exit("north", room, false, null);
         exampleKey = new Keys("Library key","Open the library", exit);
     }
 
@@ -60,7 +60,7 @@ public class KeysTest
     @Test
     public void testKeyExit()
     {
-        Exit exitTest = new Exit("south",room,false);
+        Exit exitTest = new Exit("south",room,false, null);
         assertEquals(exitTest, exampleKey.getKeyExit());
     }
     

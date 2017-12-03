@@ -88,7 +88,8 @@ public class Game
         banquetinghall.setExits("south",dancingroom, false, "> The door is blocked by Bob's toys");
         banquetinghall.setExits("east",kitchen, true, null);
         banquetinghall.setExits("west",poolroom, true, null);
-        poolroom.setExits("east",banquetinghall, false, "> You have not finished examining the crime scene");
+        //poolroom.setExits("east",banquetinghall, false, "> You have not finished examining the crime scene");
+        poolroom.setExits("east",banquetinghall, true, "> You have not finished examining the crime scene");
         dancingroom.setExits("north",banquetinghall, true, null);
         dancingroom.setExits("up",livingroom, true, null);
         kitchen.setExits("west",banquetinghall, true, null);
@@ -143,7 +144,7 @@ public class Game
         ms_Cunningham = new Neutral("Ms Cunningham","My husband was the best old friend of Mr Taylor", poolroom, "..\\pictures\\Characters\\MsCunningham2.png");
         
         // Ally characters creation //
-        chambermaid = new Ally("Chambermaid","I was in the dancing room to serve the guests.I was not with the master", poolroom, item_chambermaid, "..\\pictures\\Characters\\Chambermaid2.png");
+        chambermaid = new Ally("Chambermaid","I was in the dancing room to serve the guests.I was not with the master", poolroom, item_chambermaid, "..\\pictures\\Characters\\Chambermaid.png");
         bob_Taylor = new Ally("Bob Taylor","What happened to my father ? ", poolroom, item_bob_taylor, "..\\pictures\\Characters\\BobTaylor2.png");
         mr_Cunningham = new Ally("Mr Cunningham", "I was in my bedroom when I heard someone screaming. So I went down stairs quickly", poolroom, item_mr_Cunningham, "..\\pictures\\Characters\\MrCunningham2.png");
         ms_Wellington = new Ally("Ms Wellington", "I was in the dancing room with my husband. The chambermaid served us.", poolroom, item_ms_Wellington, "..\\pictures\\Characters\\MsWellington2.png");

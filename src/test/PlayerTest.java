@@ -65,7 +65,7 @@ public class PlayerTest
         // Initialisez ici vos engagements
         goodPlayer= new Player("Hercule");
         Room room= new Room("Chambre", null);
-        exit = new Exit("south", room, false);
+        exit = new Exit("south", room, false, null);
     }
 
     
