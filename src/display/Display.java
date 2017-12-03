@@ -514,15 +514,20 @@ public class Display extends JFrame {
         {
             if (png.getRoom().getDescription()==(g.getCurrent().getDescription()))
             {
-                if (png.getName()!="Bob Taylor"){
+                if (png.getName().equals("Bob Taylor")){
                     ImageIcon imgI = new ImageIcon(getClass().getResource(png.getPicture()));
                     Image img = imgI.getImage();
-                    background.getGraphics().drawImage(img, x,y, img.getWidth(null)/2, img.getHeight(null)/2, null);
+                    background.getGraphics().drawImage(img, x,y+110, img.getWidth(null)/2, img.getHeight(null)/2, null);
+                    x+=100;}
+                else if(png.getName().equals("Nina Taylor")){
+                    ImageIcon imgI = new ImageIcon(getClass().getResource(png.getPicture()));
+                    Image img = imgI.getImage();
+                    background.getGraphics().drawImage(img, x-20,y+75, img.getWidth(null)/2, img.getHeight(null)/2, null);
                     x+=100;}
                 else{
                     ImageIcon imgI = new ImageIcon(getClass().getResource(png.getPicture()));
                     Image img = imgI.getImage();
-                    background.getGraphics().drawImage(img, x,y+110, img.getWidth(null)/2, img.getHeight(null)/2, null);
+                    background.getGraphics().drawImage(img, x,y, img.getWidth(null)/2, img.getHeight(null)/2, null);
                     x+=100;}
                     
             }
