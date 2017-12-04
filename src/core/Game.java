@@ -513,6 +513,8 @@ public class Game
         }
        
        
+        
+        
         /*player.addItem(necklace_red);
         player.addItem(necklace_red);
         player.addItem(necklace_red);*/
