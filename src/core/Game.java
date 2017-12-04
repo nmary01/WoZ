@@ -519,12 +519,13 @@ public class Game
                     + "On the painting, a gramophone is pictured on a sideboard. The gramophone on the painting curiously looks like the gramophone in the dancing room. \n"
                     + "When you inspect the sideboard on the real library you see some wear marks as if an object was previously placed on it. \n"
                     + "You meet the chambermaid wanting to leave the library. She seems to want to tell you something but do not dare to approach you.");
-                   // speak_with_chambermaid = true;
+                    canSpeak = true;
                     exam = false;
                 }
                 if (speak_with_chambermaid)
                 {
                     chambermaid.setText("I saw Nina Taylor go to the gardener hut some nights. I do not know what she is doing there. ");
+                    canSpeak = false;
                     speak_with_chambermaid = false;
                     
                 }
@@ -547,7 +548,20 @@ public class Game
         }
         if (step4Finish)
         {
-            // Bathroom
+            if (currentRoom == bathroom)
+            {
+                if (exam)
+                {
+                    System.out.println(" You enter in the bathroom and you see the chambermaid treating the valet's arm. \n"
+                    + " The wound looks like a rodent bite but it is much bigger than a rat. It is strange because Mr Taylor was allergic to animals. \n"
+                    + "You notice that there is a potion on the furniture next to the chambermaid. She notices that you are injured. \n"
+                    + "She signals to you that you can take it. "); 
+                    //permet de prendre la potion
+                    exam = false;
+                }
+                //ajout potion possible pour le joueur
+
+            }
             if (currentRoom == guestbedroom)
             {
                 if (exam)
