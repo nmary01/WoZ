@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.text.DefaultCaret;
 
 /**
  * This class represent the display of the game
@@ -41,6 +42,9 @@ public class Display extends JFrame {
         this.setTitle("AMONG US");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
+        
+        displaySpeak=new DisplaySpeak(frame);
+        displaySpeak.setVisible(false);
 
         //Set the background and add the PNG's images presents in the room 
         background = displayRoom(g);
@@ -66,11 +70,7 @@ public class Display extends JFrame {
         //Partie de Gauche
         display = new JPanel(); // Partie Image et Interaction
         display.setLayout(new BoxLayout(display, BoxLayout.Y_AXIS));
-        display.setSize(500, 900);
 
-        //stackImages = new JLayeredPane();
-        //stackImages.setBounds(0,0,0,0);
-        
         image = new JPanel();
         image.setLayout(new BoxLayout(image, BoxLayout.X_AXIS));
         //image.setOpaque(true);
@@ -79,10 +79,15 @@ public class Display extends JFrame {
         textAreaLayout = new JPanel();
         //textAreaLayout = new JScrollPane(textArea);
         //textAreaLayout.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        textAreaLayout.setLayout(new BoxLayout(textAreaLayout, BoxLayout.X_AXIS));     
+        textAreaLayout.setLayout(new BoxLayout(textAreaLayout, BoxLayout.X_AXIS));
+        textAreaLayout.setSize(new Dimension(800,125));
 
-        interaction = new JPanel(); // partie de gauche : comprend l'image et l'interaction
+        interaction = new JPanel(); // partie de gauche : comprend l'interaction
         interaction.setLayout(new BoxLayout(interaction, BoxLayout.X_AXIS));
+        interaction.setPreferredSize(new Dimension(1142,125));
+        //interaction.setMaximumSize(new Dimension(1142,100));
+        //interaction.setBounds(0,0, 50, 50);
+        
 
 
         action = new JPanel(); // comprend tous les boutons suivant : examiner, prendre, oui, non, parler
@@ -119,7 +124,11 @@ public class Display extends JFrame {
         examiner.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt)
             {
-                
+                textArea.append("You found: \n");
+                for (Item i:g.getCurrent().getListOfItems())
+                {
+                    textArea.append(i.getName()+", "+i.getDescription()+"\n");
+                }
             }
         });
         
@@ -355,9 +364,7 @@ public class Display extends JFrame {
         // labels
         
         setTextArea(text);
-        textArea.setLineWrap(true);
-        textArea.setEditable(false);
-        textArea.setMaximumSize(new Dimension(900,150));
+        
         //scroll = new JScrollPane(textArea);
         //scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
@@ -414,8 +421,7 @@ public class Display extends JFrame {
         display.add(interaction);
         interaction.add(textAreaLayout);
         interaction.add(action);
-        textAreaLayout.add(textArea);
-        //textAreaLayout.add(scroll);
+        textAreaLayout.add(scroll);
         player.add(inventory);
         player.add(moves);
         player.add(diary_hp);
@@ -470,6 +476,14 @@ public class Display extends JFrame {
     public void setTextArea(String s)
     {
         textArea = new JTextArea(s);
+        textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
+        textArea.setEditable(false);
+        scroll = new JScrollPane(textArea);
+        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        
+        DefaultCaret caret = (DefaultCaret)textArea.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
     }
 
     public JPanel getItems (Game g)
@@ -558,5 +572,11 @@ public class Display extends JFrame {
     public JTextArea getTextArea() {
         return textArea;
     }
+
+    public DisplaySpeak getDisplaySpeak() {
+        return displaySpeak;
+    }
+    
+    
 }
 
