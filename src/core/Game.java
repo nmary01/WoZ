@@ -29,7 +29,7 @@ public class Game
     private Room attic;
     private Neutral mr_Taylor, ms_Taylor, ms_Cunningham;
     private Ally chambermaid, bob_Taylor, mr_Cunningham, ms_Wellington;
-    private Enemy valet, caretaker, mr_Wellington, nina_Taylor, ghost; 
+    private Enemy valet, caretaker, mr_Wellington, nina_Taylor, ghost,skeleton; 
     private Player player;
     private Item necklace_red, gramophone, candelar;
     private Potion potion2HP, potion6HP;
@@ -154,6 +154,8 @@ public class Game
         caretaker = new Enemy("Caretaker","I was in my hut to repair the fork",poolroom, 2,20,5, "..\\pictures\\Characters\\Caretaker2.png"); // damage =2 accuraccy = 20, HP=5
         mr_Wellington = new Enemy("Mr Wellington","I was in the dancing room with my wife", poolroom, 1,10,7, "..\\pictures\\Characters\\MrWellington2.png"); // damage =1 accuraccy = 10, HP=7
         nina_Taylor = new Enemy("Nina Taylor", "I was in the library and I read a good book", poolroom, 2, 30, 8,"..\\pictures\\Characters\\NinaTaylor2.png"); // damage =2 accuraccy = 30, HP=8
+        skeleton = new Enemy("Oscar the skeleton","A human skeleton", laboratory, 2, 80, 5,"..\\pictures\\Characters\\skeleton.png");
+        ghost = new Enemy("Casper the Ghost", "A little green ghost", livingroom, 1, 50, 4, "..\\pictures\\Characters\\ghost.png");
         
         listOfPNG = new ArrayList();
         listOfPNG.add(ms_Taylor);
@@ -166,6 +168,7 @@ public class Game
         //listOfPNG.add(caretaker);
         listOfPNG.add(mr_Wellington);
         listOfPNG.add(nina_Taylor);
+        
         
     }
      public void createItem()
@@ -544,7 +547,7 @@ public class Game
                 {
                     System.out.println(" You are in a corridor. You see four doors. Only two are opened.");
                     exam = false;
-                    step4finish = true;
+                    step4Finish = true;
                 }
             }
         }
@@ -650,6 +653,19 @@ public class Game
                 }
             if (step7finish)
             {
+                System.out.println("When you opened the door, a little green ghost appears and attacked you.");
+                if(fight_win)
+                {
+                 System.out.println("The skeleton is dead. You see that one of its bone is strange. This bone seems to be carved as a key");
+                // joueur doit ramasser la clef
+                
+                    if (exam)
+                    {
+                    System.out.println(" You look and the desk and you find some construction plans. It seems that Mr Taylor wanted to dig very deeply at east from the garden. It is the same place than the gardener hut. ");
+                    }
+                corridor.modifyExit("up");
+                System.out.println("You unblock a new room. A trapdoor appears in the corridor");
+                }
                 
             }
        
