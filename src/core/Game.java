@@ -653,6 +653,8 @@ public class Game
                 }
             if (step7finish)
             {
+                if (currentRoom == laboratory)
+                {
                 System.out.println("When you opened the door, a little green ghost appears and attacked you.");
                 if(fight_win)
                 {
@@ -666,6 +668,29 @@ public class Game
                 corridor.modifyExit("up");
                 System.out.println("You unblock a new room. A trapdoor appears in the corridor");
                 }
+                }
+                  if (currentRoom == attic)
+                {
+                    if (exam)
+                    {
+                        System.out.println(" You finally discover the attic. It is dark because there is only one window lighting the room. \n"
+                        + " You decide to look out the window and discover a huge garden hidden by the trees when guests arrive by the entrance. ");
+                        hall.modifyExit("north");
+                    }
+                }
+            if (step8Finish)
+            {
+                if (currentRoom == garden)
+                {
+                    if (exam)
+                    {
+                        System.out.println(" You see a well at the north but there is a steel grid locked by a padlock.\n"
+                        + "There is an apple tree next to it with only one apple on the tree. You can maybe pick up the apple and eat it now or later.\n"
+                        + "");
+                    }
+                }
+            }
+                
                 
             }
        
