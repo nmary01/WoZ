@@ -290,12 +290,14 @@ public class Game
         Boolean step4Finish;
         Boolean step5finish;
         Boolean step6finish;
+        Boolean step7finish;
         step1Finish = false;
         step2Finish = false;
         step3Finish = false;
         step4Finish = false;
         step5finish = false;
         step6finish = false;
+        step7finish = false;
         
         // All the characters are in the poolroom and the exit opens only after speak with all the characters //
         Boolean canSpeak; // player can speak with PNG
@@ -630,7 +632,26 @@ public class Game
                                 "The safe contains a disk, a lot of money and a biscuits box.");
                     }
                 }
-        
+                if (currentRoom == dancingroom
+                        // && il doit avoir le dique dans son inventaire
+                        )
+                {
+                    ms_Taylor.setRoom(dancingroom);
+                    ms_Taylor.setText("What does this object do here, it should be in the library");
+                    // player has to take the gramophone in his inventory
+                }
+                if (currentRoom == library 
+                        // && il doit avoir le disque et le gramophone dans son inventaire
+                        )
+                {
+                    System.out.println("You put the gramophone at its place and you insert the disk on it. \n"+
+                                        " You are hearing a loud noise and a door is appearing.");  
+                    library.modifyExit("north");   
+                }
+            if (step7finish)
+            {
+                
+            }
        
        
         
