@@ -287,9 +287,16 @@ public class Game
         Boolean step1Finish;
         Boolean step2Finish;
         Boolean step3Finish;
+        Boolean step4Finish;
+        Boolean step5finish;
+        Boolean step6finish;
         step1Finish = false;
         step2Finish = false;
         step3Finish = false;
+        step4Finish = false;
+        step5finish = false;
+        step6finish = false;
+        
         // All the characters are in the poolroom and the exit opens only after speak with all the characters //
         Boolean canSpeak; // player can speak with PNG
         Boolean speak_with_mr_Taylor, speak_with_ms_Taylor, speak_with_ms_Cunningham, speak_with_chambermaid, speak_with_bob_Taylor, speak_with_mr_Cunningham;
@@ -312,6 +319,14 @@ public class Game
         speak_with_mr_Wellington = false;
         speak_with_nina_Taylor = false;
 
+        Boolean can_exam_canvas;
+        can_exam_canvas = false;
+        Boolean find_bedroom_key;
+        find_bedroom_key = false;
+        
+        int safe_code, essai_code;
+        safe_code = 9515;
+        
         if (exam)
         {
             System.out.println("You are in the poolroom. \n"
@@ -408,6 +423,7 @@ public class Game
                     System.out.println("This is the kitchen, Bob Taylor is not here. \n"
                             + "A set of forks and knives is in one of the cupboards of the kitchen.");
                     exam = false;
+                    // Recupère arme
                 }
             }
             else if (currentRoom == cellar)
@@ -503,14 +519,104 @@ public class Game
                     + "On the painting, a gramophone is pictured on a sideboard. The gramophone on the painting curiously looks like the gramophone in the dancing room. \n"
                     + "When you inspect the sideboard on the real library you see some wear marks as if an object was previously placed on it. \n"
                     + "You meet the chambermaid wanting to leave the library. She seems to want to tell you something but do not dare to approach you.");
-                    speak_with_chambermaid = true;
+                   // speak_with_chambermaid = true;
+                    exam = false;
                 }
                 if (speak_with_chambermaid)
                 {
                     chambermaid.setText("I saw Nina Taylor go to the gardener hut some nights. I do not know what she is doing there. ");
+                    speak_with_chambermaid = false;
+                    
+                }
+            }
+        
+        else if (currentRoom == corridor)
+        {
+        System.out.println("There is a statut with a weapon in this corridor. You can take it weapon if you want. ");
+        // recupere arme
+        Boolean fight; // this variable will be initialize with the fight
+            if (fight)
+            {
+                if (exam)
+                {
+                    System.out.println(" You are in a corridor. You see four doors. Only two are opened.");
+                    exam = false;
+                    step4finish = true;
                 }
             }
         }
+        if (step4Finish)
+        {
+            // Bathroom
+            if (currentRoom == guestbedroom)
+            {
+                if (exam)
+                {
+                   System.out.println(" You are in the guest bedroom. Today this bedroom is Mr&Ms Cunnigham's bedroom. Mr Cunnigham is in his bedrrom.");
+                   mr_Cunningham.setRoom(guestbedroom);
+                   ms_Cunningham.setText("It is strange, last time this canvas was not here.");
+                   can_exam_canvas = true;
+                   if (exam && can_exam_canvas)
+                   {
+                       System.out.println(" You find a key behind the canvas and you take it.");
+                       find_bedroom_key = true;
+                       player.addItem(bedroomkey);
+                   } 
+                   exam = false;
+                }
+            }
+        
+        if (step5finish)
+        {
+            if (find_bedroom_key)
+            {
+                corridor.modifyExit("south");
+            }
+            if (currentRoom == bedroom)
+            {
+                if (exam)
+                {
+                    System.out.println("You are in the host bedroom. You see a big safe with a four number code. Ms Taylor is in her room.");
+                    ms_Taylor.setText("Oh no ! I am forgetting the number code ! Please, ask to my daughter, my guests and my employees. I gave to several of them a piece of this code. ");
+                    
+                    if (speak_with_ms_Taylor)
+                    {
+                       nina_Taylor.setRoom(dancingroom);
+                       nina_Taylor.setText("Bob Taylor has fallen into a 10-meter deep well and is trying to pull it up. \n " +
+                                           "Each day it rises 3 meters and slides 2 meters during the night.\n" +
+                                           "How many days will it take to get to the surface?");
+                       ms_Wellington.setRoom(library);
+                       ms_Wellington.setText("In a girl group\n" +
+                                             " 70% wear a blue sweater\n" +
+                                             " 75% wear blue pants\n" +
+                                             " 85% wear a blue hat\n" +
+                                             " 85% wear a blue coat\n" +
+                                             "What is the minimum percentage of girls wearing only blue clothes?");
+                       
+                       bob_Taylor.setRoom(library);
+                       bob_Taylor.setText("I saw my sister and my father arguing before his death.");
+                    
+                        mr_Cunningham.setRoom(poolroom);
+                        mr_Cunningham.setText("David is 10 years old and his younger brother is half his age. \n" +
+                                              "When David will be 10 times older, how old will Franck be?");
+                    
+                    
+                    }
+                }
+            }
+            if (step6finish)
+            {
+                if (currentRoom == bedroom)
+                {
+                    System.out.println("Did you find the safe code? ");
+                    // enter the safe code -- creation int essai_code
+                    if (essai_code == safe_code)
+                    {
+                        System.out.println("You find the good number code, the safe door is opened. \n " +
+                                "The safe contains a disk, a lot of money and a biscuits box.");
+                    }
+                }
+        
        
        
         
@@ -531,10 +637,15 @@ public class Game
         }
         System.out.println("Thank you for playing.  Good bye.");
         */
-    }
+        }
+        }
+        }
+        }
+        }
+        }
   
     }
-    }
+    
     
 
     
