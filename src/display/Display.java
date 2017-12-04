@@ -26,6 +26,7 @@ public class Display extends JFrame {
     private DisplaySpeak displaySpeak;
     private JScrollPane scroll;
     private Game g;
+    private static boolean step1_done, exam_step1, exam;
     //private JScrollPane textAreaLayout;
     //private Image img;
 
@@ -33,23 +34,24 @@ public class Display extends JFrame {
      * Constructeur d'objets de classe Display
      */
     public Display(Game g) {
-        this.g=g;
+        this.g = g;
         //text = "Welcome to the WOLOLO World. J'ai décidé de parler français parce que c'est plus simple pour tout le monde. Alors la, comme tu peux le voir, l'interface est pas terminée mais ca avance peu à peu. Peut-être qu'un jour elle sera focntionnelle";
     }
-    
-    public void generateDisplay(Game g){
-        Display frame=this;
+
+    public void generateDisplay(Game g) {
+
+        step1_done = false;
+
+        Display frame = this;
         this.setTitle("AMONG US");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
-        
-        displaySpeak=new DisplaySpeak(frame);
+
+        displaySpeak = new DisplaySpeak(frame);
         displaySpeak.setVisible(false);
 
         //Set the background and add the PNG's images presents in the room 
         background = displayRoom(g);
-
-
 
         //Menu
         menuBar = new JMenuBar();
@@ -66,7 +68,6 @@ public class Display extends JFrame {
         menuBar.add(menu5);
 
         // JPanel
-
         //Partie de Gauche
         display = new JPanel(); // Partie Image et Interaction
         display.setLayout(new BoxLayout(display, BoxLayout.Y_AXIS));
@@ -80,23 +81,20 @@ public class Display extends JFrame {
         //textAreaLayout = new JScrollPane(textArea);
         //textAreaLayout.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         textAreaLayout.setLayout(new BoxLayout(textAreaLayout, BoxLayout.X_AXIS));
-        textAreaLayout.setSize(new Dimension(800,125));
+        textAreaLayout.setSize(new Dimension(800, 125));
 
         interaction = new JPanel(); // partie de gauche : comprend l'interaction
         interaction.setLayout(new BoxLayout(interaction, BoxLayout.X_AXIS));
-        interaction.setPreferredSize(new Dimension(1142,125));
+        interaction.setPreferredSize(new Dimension(1142, 125));
         //interaction.setMaximumSize(new Dimension(1142,100));
         //interaction.setBounds(0,0, 50, 50);
-        
-
 
         action = new JPanel(); // comprend tous les boutons suivant : examiner, prendre, oui, non, parler
         action.setLayout(new BoxLayout(action, BoxLayout.Y_AXIS));
 
-
         //Partie de Droite
         player = new JPanel(); // Partie inventaire, moves et diary_hp
-        player.setLayout(new GridLayout(3,1));
+        player.setLayout(new GridLayout(3, 1));
 
         inventory = new JPanel(); // comprend le bouton inventaire et les 4 images des objets
         inventory.setLayout(new BoxLayout(inventory, BoxLayout.Y_AXIS));
@@ -121,62 +119,64 @@ public class Display extends JFrame {
         // boutons
         // interactions
         examiner = new JButton("Examine");
-        examiner.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent evt)
-            {
-                textArea.append("You found: \n");
-                for (Item i:g.getCurrent().getListOfItems())
-                {
-                    textArea.append(i.getName()+", "+i.getDescription()+"\n");
+        examiner.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                step1();
+                if (!step1_done){
+                    textArea.append(">You are in the poolroom.\n>Mr Taylor was founded by the Chambermaid this morning when she came to clean the poolroom. Her scream attracted everyone.\n>You notice that it is missing a pool cue and you find a strange red necklace nearby the pool.\n>You examine the dead body and you notice a circular wound with the same diameter of a pool cue and some splinters of wood at the bottom of the neck.\n" +
+                    ">Take advantage that everyone is here to question them.\n");
+                    exam_step1=true;
+                    exam=true;
+                    remove(prendre);
+                    remove(action);
+                    prendre.setEnabled(exam);
+                    interaction.add(action);
+                    action.add(prendre);
+                    //generateDisplay(g);
                 }
             }
         });
-        
+
         prendre = new JButton("Take");
-        prendre.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent evt)
-            {
-                
+        prendre.setEnabled(false);
+        prendre.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                System.out.println("Coucou");
             }
         });
-        
+
         parler = new JButton("Speak to");
-        parler.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent evt)
-            {
-                displaySpeak=new DisplaySpeak(frame);
+        parler.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                displaySpeak = new DisplaySpeak(frame);
             }
         });
-        
+
         oui = new JButton("Yes");
-        oui.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent evt)
-            {
-                
+        oui.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+
             }
         });
-        
+
         non = new JButton("No");
-        non.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent evt)
-            {
-                
+        non.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+
             }
         });
-        
 
         // journal
         journal = new JButton("Diary");
-        journal.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent evt)
-            {
-                
+        journal.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+
             }
         });
-        
+
         journalPanel = new JPanel();
         journalPanel.setLayout(new BoxLayout(journalPanel, BoxLayout.X_AXIS));
-        journalPanel.setSize(100,100);
+        journalPanel.setSize(100, 100);
         journalPanel.add(journal);
 
         // déplacement
@@ -219,156 +219,156 @@ public class Display extends JFrame {
         eastPanel = new JPanel();
         eastPanel.setMaximumSize(new Dimension(50, 50));
 
-        
         upPanel = new JPanel();
         upPanel.setPreferredSize(new Dimension(100, 100));
-        
+
         downPanel = new JPanel();
         downPanel.setPreferredSize(new Dimension(100, 100));
 
         nord = new JButton(north);
-        nord.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent evt)
-            {
-               for (Exit i: g.getCurrent().getListExits())
-               {
-                   if (i.getDirection().equals("north")){
-                       if(i.getOpened())
-                       {
-                            Command co=new Command("go","north");
+        nord.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                for (Exit i : g.getCurrent().getListExits()) {
+                    if (i.getDirection().equals("north")) {
+                        if (i.getOpened()) {
+                            Command co = new Command("go", "north");
                             g.goRoom(co);
                             deplacement(g);
-                            textArea.append("> You are in the "+g.getCurrent().getDescription()+"\n");
+                            textArea.append("> You are in the " + g.getCurrent().getDescription() + "\n");
                             break;
-                       }
-                       else{textArea.append(i.getTextBlock()+"\n");break;}
-                   }
-               }
+                        } else {
+                            textArea.append(i.getTextBlock() + "\n");
+                            break;
+                        }
+                    }
+                }
 
             }
         });
-        
+
         sud = new JButton(south);
-        sud.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent evt)
-            {
-                for (Exit i: g.getCurrent().getListExits())
-               {
-                   if (i.getDirection().equals("south")){
-                       if(i.getOpened())
-                       {
-                            Command co=new Command("go","south");
+        sud.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                for (Exit i : g.getCurrent().getListExits()) {
+                    if (i.getDirection().equals("south")) {
+                        if (i.getOpened()) {
+                            Command co = new Command("go", "south");
                             g.goRoom(co);
                             deplacement(g);
-                            textArea.append("> You are in the "+g.getCurrent().getDescription()+"\n");
+                            textArea.append("> You are in the " + g.getCurrent().getDescription() + "\n");
                             break;
-                       }
-                       else{textArea.append(i.getTextBlock()+"\n");break;}
-                   }
-               }
+                        } else {
+                            textArea.append(i.getTextBlock() + "\n");
+                            break;
+                        }
+                    }
+                }
             }
         });
-        
+
         est = new JButton(east);
-        est.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent evt)
-            {
-                for (Exit i: g.getCurrent().getListExits())
-               {
-                   if (i.getDirection().equals("east")){
-                       if(i.getOpened())
-                       {
-                            Command co=new Command("go","east");
-                            g.goRoom(co);
-                            deplacement(g);
-                            textArea.append("> You are in the "+g.getCurrent().getDescription()+"\n");
-                            break;
-                       }
-                       else{textArea.append(i.getTextBlock()+"\n");break;}
-                   }
-               }
-                
+        est.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                for (Exit i : g.getCurrent().getListExits()) {
+                    if (i.getDirection().equals("east")) {
+                        step1();
+                        if (step1_done) {
+                            if (i.getOpened()) {
+                                Command co = new Command("go", "east");
+                                g.goRoom(co);
+                                deplacement(g);
+                                textArea.append("> You are in the " + g.getCurrent().getDescription() + "\n");
+                                break;
+                            } else {
+                                textArea.append(i.getTextBlock() + "\n");
+                                break;
+                            }
+                        } else {
+                            textArea.append(i.getTextBlock() + "\n");
+                        }
+
+                    }
+                }
+
             }
-        });
-        
+
+        }
+        );
+
         ouest = new JButton(west);
-        ouest.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent evt)
-            {
-                for (Exit i: g.getCurrent().getListExits())
-               {
-                   if (i.getDirection().equals("west")){
-                       if(i.getOpened())
-                       {
-                            Command co=new Command("go","west");
+
+        ouest.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent evt) {
+                for (Exit i : g.getCurrent().getListExits()) {
+                    if (i.getDirection().equals("west")) {
+                        if (i.getOpened()) {
+                            Command co = new Command("go", "west");
                             g.goRoom(co);
                             deplacement(g);
-                            textArea.append("> You are in the "+g.getCurrent().getDescription()+"\n");
+                            textArea.append("> You are in the " + g.getCurrent().getDescription() + "\n");
                             break;
-                       }
-                       else{textArea.append(i.getTextBlock()+"\n");break;}
-                   }
-               }
+                        } else {
+                            textArea.append(i.getTextBlock() + "\n");
+                            break;
+                        }
+                    }
+                }
             }
-        });
-        
+        }
+        );
 
         // étage
         haut = new JButton(upstairs);
-        haut.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent evt)
-            {
-                for (Exit i: g.getCurrent().getListExits())
-               {
-                   if (i.getDirection().equals("up")){
-                       if(i.getOpened())
-                       {
-                            Command co=new Command("go","up");
+        haut.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                for (Exit i : g.getCurrent().getListExits()) {
+                    if (i.getDirection().equals("up")) {
+                        if (i.getOpened()) {
+                            Command co = new Command("go", "up");
                             g.goRoom(co);
                             deplacement(g);
-                            textArea.append("> You are in the "+g.getCurrent().getDescription()+"\n");
+                            textArea.append("> You are in the " + g.getCurrent().getDescription() + "\n");
                             break;
-                       }
-                       else{textArea.append(i.getTextBlock()+"\n");break;}
-                   }
-               }
-            }
-        });
-        
-        bas = new JButton(downstairs);
-        bas.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent evt)
-            {
-                for (Exit i: g.getCurrent().getListExits())
-               {
-                   if (i.getDirection().equals("down")){
-                       if(i.getOpened())
-                       {
-                            Command co=new Command("go","down");
-                            g.goRoom(co);
-                            deplacement(g);
-                            textArea.append("> You are in the "+g.getCurrent().getDescription()+"\n");
+                        } else {
+                            textArea.append(i.getTextBlock() + "\n");
                             break;
-                       }
-                       else{textArea.append(i.getTextBlock()+"\n");break;}
-                   }
-               }
+                        }
+                    }
+                }
             }
         });
 
+        bas = new JButton(downstairs);
+        bas.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                for (Exit i : g.getCurrent().getListExits()) {
+                    if (i.getDirection().equals("down")) {
+                        if (i.getOpened()) {
+                            Command co = new Command("go", "down");
+                            g.goRoom(co);
+                            deplacement(g);
+                            textArea.append("> You are in the " + g.getCurrent().getDescription() + "\n");
+                            break;
+                        } else {
+                            textArea.append(i.getTextBlock() + "\n");
+                            break;
+                        }
+                    }
+                }
+            }
+        });
 
         // inventaire
         inventaire = new JLabel("Inventory", SwingConstants.LEFT);
         inventaire.setFont(new Font("SansSerif", Font.PLAIN, 30));
 
         // labels
-        
         setTextArea(text);
-        
+
         //scroll = new JScrollPane(textArea);
         //scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-
-        hp = new JLabel("HP: "+Integer.toString(g.getPlayer().getHP()));
+        hp = new JLabel("HP: " + Integer.toString(g.getPlayer().getHP()));
         hp.setFont(new Font("SansSerif", Font.PLAIN, 40));
 
         // ajout bouton/Panel dans Panel
@@ -380,10 +380,9 @@ public class Display extends JFrame {
 
         //inventory.add(inventaire);
         inventory.setBorder(BorderFactory.createTitledBorder("Inventory"));
-        
+
         JPanel items = new JPanel();
         items = getItems(g);
-
 
         diary_hp.add(journalPanel);
         diary_hp.add(hp);
@@ -402,10 +401,6 @@ public class Display extends JFrame {
         direction.add(southPanel, BorderLayout.CENTER);
         direction.add(eastPanel, BorderLayout.EAST);
         direction.add(westPanel, BorderLayout.WEST);
-        
-        
-                
-        
 
         // griser les boutons
         setMoveButtons(g);
@@ -460,97 +455,89 @@ public class Display extends JFrame {
             if (exits.getDirection() == "east") {
                 est.setEnabled(true);
             }
-            
+
             if (exits.getDirection() == "up") {
                 haut.setEnabled(true);
             }
-            
+
             if (exits.getDirection() == "down") {
                 bas.setEnabled(true);
             }
-            
 
         }
     }
-    
-    public void setTextArea(String s)
-    {
+
+    public void setTextArea(String s) {
         textArea = new JTextArea(s);
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         textArea.setEditable(false);
         scroll = new JScrollPane(textArea);
         scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-        
-        DefaultCaret caret = (DefaultCaret)textArea.getCaret();
+
+        DefaultCaret caret = (DefaultCaret) textArea.getCaret();
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
     }
 
-    public JPanel getItems (Game g)
-    {
+    public JPanel getItems(Game g) {
         JPanel items = new JPanel();
         items.setLayout(new GridLayout(2, 2));
-        
-        for (Item i : g.getPlayer().getInventory())
-        {
+
+        for (Item i : g.getPlayer().getInventory()) {
             JLabel item = new JLabel(i.getName());
-            if (i instanceof Weapon){
-                item.setToolTipText("<html>"+i.getDescription()+"<br>Damage: "+((Weapon) i).getDamage()+"<br>Accuracy: "+((Weapon) i).getAccuracy()+"</html>");
+            if (i instanceof Weapon) {
+                item.setToolTipText("<html>" + i.getDescription() + "<br>Damage: " + ((Weapon) i).getDamage() + "<br>Accuracy: " + ((Weapon) i).getAccuracy() + "</html>");
+            } else if (i instanceof Potion) {
+                item.setToolTipText("<html>" + i.getDescription() + "<br>Heal: " + ((Potion) i).getHeal() + "</html>");
+            } else if (i instanceof Keys) {
+                item.setToolTipText("<html>" + i.getDescription() + "<br>Room: " + ((Keys) i).getKeyRoom() + "<br>Exit: " + ((Keys) i).getKeyExit().getDirection() + "</html>");
+            } else {
+                item.setToolTipText(i.getDescription());
             }
-            else if (i instanceof Potion){
-                item.setToolTipText("<html>"+i.getDescription()+"<br>Heal: "+((Potion) i).getHeal()+"</html>");
-            }
-            else if (i instanceof Keys){
-                item.setToolTipText("<html>"+i.getDescription()+"<br>Room: "+((Keys) i).getKeyRoom()+"<br>Exit: "+((Keys) i).getKeyExit().getDirection()+"</html>");
-            }
-            else{item.setToolTipText(i.getDescription());}
             items.add(item);
         }
-        
+
         return items;
     }
-    
-    public BufferedImage displayRoom(Game g)
-    {
-        
+
+    public BufferedImage displayRoom(Game g) {
+
         ImageIcon icon = new ImageIcon(getClass().getResource(g.getCurrent().getImage()));
         Image i = icon.getImage();
         Image newing = i.getScaledInstance(1142, 643, java.awt.Image.SCALE_SMOOTH);
         icon = new ImageIcon(newing);
         //JLabel image_manoir = new JLabel(icon);
-        BufferedImage background = new BufferedImage(newing.getWidth(null), newing.getHeight(null),BufferedImage.TYPE_INT_RGB);
+        BufferedImage background = new BufferedImage(newing.getWidth(null), newing.getHeight(null), BufferedImage.TYPE_INT_RGB);
         background.getGraphics().drawImage(newing, 0, 0, null);
-        
-        int x= 20;
-        int y=200;
-        
-        for (PNG png: g.getListOfPNG())
-        {
-            if (png.getRoom().getDescription()==(g.getCurrent().getDescription()))
-            {
-                if (png.getName().equals("Bob Taylor")){
+
+        int x = 20;
+        int y = 200;
+
+        for (PNG png : g.getListOfPNG()) {
+            if (png.getRoom().getDescription() == (g.getCurrent().getDescription())) {
+                if (png.getName().equals("Bob Taylor")) {
                     ImageIcon imgI = new ImageIcon(getClass().getResource(png.getPicture()));
                     Image img = imgI.getImage();
-                    background.getGraphics().drawImage(img, x,y+110, img.getWidth(null)/2, img.getHeight(null)/2, null);
-                    x+=100;}
-                else if(png.getName().equals("Nina Taylor")){
+                    background.getGraphics().drawImage(img, x, y + 110, img.getWidth(null) / 2, img.getHeight(null) / 2, null);
+                    x += 100;
+                } else if (png.getName().equals("Nina Taylor")) {
                     ImageIcon imgI = new ImageIcon(getClass().getResource(png.getPicture()));
                     Image img = imgI.getImage();
-                    background.getGraphics().drawImage(img, x-20,y+75, img.getWidth(null)/2, img.getHeight(null)/2, null);
-                    x+=100;}
-                else{
+                    background.getGraphics().drawImage(img, x - 20, y + 75, img.getWidth(null) / 2, img.getHeight(null) / 2, null);
+                    x += 100;
+                } else {
                     ImageIcon imgI = new ImageIcon(getClass().getResource(png.getPicture()));
                     Image img = imgI.getImage();
-                    background.getGraphics().drawImage(img, x,y, img.getWidth(null)/2, img.getHeight(null)/2, null);
-                    x+=100;}
-                    
+                    background.getGraphics().drawImage(img, x, y, img.getWidth(null) / 2, img.getHeight(null) / 2, null);
+                    x += 100;
+                }
+
             }
         }
         return background;
     }
-    
-    public void deplacement(Game g)
-    {
+
+    public void deplacement(Game g) {
         remove(image);
         remove(display);
         remove(moves);
@@ -558,12 +545,10 @@ public class Display extends JFrame {
         remove(floor);
         remove(menuBar);
         remove(player);
-        
 
         background = displayRoom(g);
         generateDisplay(g);
     }
-    
 
     public Game getG() {
         return g;
@@ -576,7 +561,20 @@ public class Display extends JFrame {
     public DisplaySpeak getDisplaySpeak() {
         return displaySpeak;
     }
-    
-    
-}
 
+    public void step1() {
+        boolean speakToAll = true;
+        for (boolean b : displaySpeak.getListOfBoolean()) {
+            System.out.println(b);
+            if (!b) {
+                speakToAll = false;
+            }
+        }
+        System.out.println("-----------------------------------------");
+        if (speakToAll) {
+            g.getCurrent().modifyExit("east");
+            step1_done=true;
+        }
+    }
+
+}
