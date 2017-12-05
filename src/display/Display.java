@@ -17,13 +17,15 @@ public class Display extends JFrame {
 
     private JMenuBar menuBar;
     private JMenu menu1, menu2, menu3, menu4, menu5;
-    private JButton examiner, prendre, oui, non, parler, journal, haut, bas, nord, sud, est, ouest;
+    private JButton examiner, prendre, drop, non, parler, journal, haut, bas, nord, sud, est, ouest;
     private JPanel display, interaction, action, inventory, moves, direction, floor, diary_hp, item, player, textAreaLayout, image, northPanel, southPanel, westPanel, eastPanel, upPanel, downPanel, journalPanel;
     private JLabel hp, inventaire, screen;
     private JTextArea textArea;
     private String text;
     private BufferedImage background;
     private DisplaySpeak displaySpeak;
+    private DisplayTake displayTake;
+    private DisplayDrop displayDrop;
     private JScrollPane scroll;
     private Game g;
     private static boolean step1_done, exam_step1, exam;
@@ -127,21 +129,22 @@ public class Display extends JFrame {
                     ">Take advantage that everyone is here to question them.\n");
                     exam_step1=true;
                     exam=true;
-                    remove(prendre);
+                    //remove(prendre);
                     remove(action);
                     prendre.setEnabled(exam);
                     interaction.add(action);
-                    action.add(prendre);
+                    //action.add(prendre);
                     //generateDisplay(g);
+                    updatePlayer(g);
                 }
             }
         });
 
         prendre = new JButton("Take");
-        prendre.setEnabled(false);
+        prendre.setEnabled(exam);
         prendre.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                System.out.println("Coucou");
+                displayTake = new DisplayTake(frame);
             }
         });
 
@@ -152,10 +155,10 @@ public class Display extends JFrame {
             }
         });
 
-        oui = new JButton("Yes");
-        oui.addActionListener(new ActionListener() {
+        drop = new JButton("Drop");
+        drop.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-
+                displayDrop = new DisplayDrop(frame);
             }
         });
 
@@ -374,7 +377,7 @@ public class Display extends JFrame {
         // ajout bouton/Panel dans Panel
         action.add(examiner);
         action.add(prendre);
-        action.add(oui);
+        action.add(drop);
         action.add(parler);
         action.add(non);
 
@@ -544,6 +547,16 @@ public class Display extends JFrame {
         remove(direction);
         remove(floor);
         remove(menuBar);
+        remove(player);
+
+        background = displayRoom(g);
+        generateDisplay(g);
+    }
+    
+    public void updatePlayer(Game g) {
+        remove(moves);
+        remove(direction);
+        remove(floor);
         remove(player);
 
         background = displayRoom(g);
