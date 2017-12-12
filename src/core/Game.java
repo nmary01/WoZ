@@ -1,5 +1,6 @@
 package core;
 
+import display.Display;
 import java.util.ArrayList;
 
 /**
@@ -55,7 +56,7 @@ public class Game
         banquetinghall = new Room ("Banqueting hall", "..\\pictures\\Rooms\\banquet.png");
         poolroom = new Room ("PoolRoom", "..\\pictures\\Rooms\\billard.png");
         dancingroom = new Room ("Dancing Room", "..\\pictures\\Rooms\\bal.png");
-        kitchen = new Room("Kitchen", null);
+        kitchen = new Room("Kitchen", "..\\pictures\\Rooms\\cuisine.png");
         garden = new Room("Garden", null);
         well = new Room("Well", null);
         gardenerhut = new Room("Gardener hut", null);
@@ -67,13 +68,13 @@ public class Game
         cellar = new Room("Cellar", null);
             // FIN -1//
             // +1 //
-        livingroom = new Room("Living Room", null); 
-        library = new Room ("Library", null);
+        livingroom = new Room("Living Room", "..\\pictures\\Rooms\\salon.png"); 
+        library = new Room ("Library", "..\\pictures\\Rooms\\bibliotheque.png");
         laboratory = new Room("Laboratory", null);
-        corridor= new Room("Corridor", null);
-        bathroom = new Room("Bathroom", null);
-        bedroom = new Room("Bedroom", null);
-        guestbedroom = new Room("Guest Bedroom", null); 
+        corridor= new Room("Corridor", "..\\pictures\\Rooms\\couloir.png");
+        bathroom = new Room("Bathroom", "..\\pictures\\Rooms\\salledebain.png");
+        bedroom = new Room("Bedroom", "..\\pictures\\Rooms\\chambre1.png");
+        guestbedroom = new Room("Guest Bedroom", "..\\pictures\\Rooms\\chambre2.png"); 
             //FIN +1 //
             //+2//
         attic = new Room("Attic", null);
@@ -85,11 +86,12 @@ public class Game
         hall.setExits("north",garden, false, "> You must explore the mansion before");
         hall.setExits("south",banquetinghall, true, null);  
         banquetinghall.setExits("north",hall, true, null);
-        banquetinghall.setExits("south",dancingroom, false, "> The door is blocked by Bob's toys");
+        //banquetinghall.setExits("south",dancingroom, false, "> The door is blocked by Bob's toys");
+        banquetinghall.setExits("south",dancingroom, true, null);//version test
         banquetinghall.setExits("east",kitchen, true, null);
         banquetinghall.setExits("west",poolroom, true, null);
-        //poolroom.setExits("east",banquetinghall, false, "> You have not finished examining the crime scene");
-        poolroom.setExits("east",banquetinghall, true, "> You have not finished examining the crime scene");
+        poolroom.setExits("east",banquetinghall, false, "> You have not finished examining the crime scene");
+        //poolroom.setExits("east",banquetinghall, true, "> You have not finished examining the crime scene");
         dancingroom.setExits("north",banquetinghall, true, null);
         dancingroom.setExits("up",livingroom, true, null);
         kitchen.setExits("west",banquetinghall, true, null);
@@ -114,10 +116,10 @@ public class Game
         library.setExits("south",livingroom, true, null);
         //library.setExits("north",laboratory, false); To unlock
         laboratory.setExits("south",library, true, null);
-        corridor.setExits("north",bathroom, true, null);
-        corridor.setExits("south",bedroom, false, "> The door is locked. A key may be mandatory");
-        corridor.setExits("east",livingroom, true, null);
-        corridor.setExits("west",guestbedroom, true, null);
+        corridor.setExits("east",bathroom, true, null);
+        corridor.setExits("west",bedroom, false, "> The door is locked. A key may be mandatory");
+        corridor.setExits("south",livingroom, true, null);
+        corridor.setExits("north",guestbedroom, true, null);
         corridor.setExits("up",attic, false, "> You see a weird lock in the ceiling");
         bathroom.setExits("south",corridor, true, null);
         bedroom.setExits("north",corridor, true, null);
@@ -130,6 +132,7 @@ public class Game
 
     public void createCharacters()
     {
+        player = new Player("player");
         
         
         //Room poolroom = new Room ("PoolRoom", null);
@@ -150,22 +153,23 @@ public class Game
         ms_Wellington = new Ally("Ms Wellington", "I was in the dancing room with my husband. The chambermaid served us.", poolroom, item_ms_Wellington, "..\\pictures\\Characters\\MsWellington2.png");
         
         // Enemy characters ceration //
-        valet = new Enemy("Valet","I was in the kitchen. I checked the wine delivery", poolroom,4,80,12,"..\\pictures\\Characters\\Valet2.png"); // damage =4 accuraccy = 80, HP=12
-        caretaker = new Enemy("Caretaker","I was in my hut to repair the fork",poolroom, 2,20,5, "..\\pictures\\Characters\\Caretaker2.png"); // damage =2 accuraccy = 20, HP=5
+        valet = new Enemy("Valet","I was in the kitchen. I checked the wine delivery", poolroom,4,80,12,"..\\pictures\\Characters\\NinaTaylor2.png"); // damage =4 accuraccy = 80, HP=12
+        caretaker = new Enemy("Caretaker","I was in my hut to repair the fork",poolroom, 2,20,5, "..\\pictures\\Characters\\MrWellington2.png"); // damage =2 accuraccy = 20, HP=5
         mr_Wellington = new Enemy("Mr Wellington","I was in the dancing room with my wife", poolroom, 1,10,7, "..\\pictures\\Characters\\MrWellington2.png"); // damage =1 accuraccy = 10, HP=7
         nina_Taylor = new Enemy("Nina Taylor", "I was in the library and I read a good book", poolroom, 2, 30, 8,"..\\pictures\\Characters\\NinaTaylor2.png"); // damage =2 accuraccy = 30, HP=8
         
         listOfPNG = new ArrayList();
         listOfPNG.add(ms_Taylor);
-        listOfPNG.add(ms_Cunningham);
-        listOfPNG.add(chambermaid);
         listOfPNG.add(bob_Taylor);
-        listOfPNG.add(mr_Cunningham);
-        listOfPNG.add(ms_Wellington);
-        //listOfPNG.add(valet);
-        //listOfPNG.add(caretaker);
-        listOfPNG.add(mr_Wellington);
         listOfPNG.add(nina_Taylor);
+        listOfPNG.add(ms_Cunningham);
+        listOfPNG.add(mr_Cunningham);
+        listOfPNG.add(mr_Wellington);        
+        listOfPNG.add(ms_Wellington);
+        listOfPNG.add(chambermaid);
+        listOfPNG.add(valet);
+        listOfPNG.add(caretaker);
+        
         
     }
      public void createItem()
@@ -194,9 +198,10 @@ public class Game
         bathroom.addItem(potion6HP);
         
         // items in guestbedroom //
-        Exit exit_from_corridor_to_bedroom = new Exit("south",corridor,false, null);
+        Exit exit_from_corridor_to_bedroom = new Exit("west",corridor,false, null);
         bedroomkey = new Keys("Bedroom key","This key opens the master bedroom door",exit_from_corridor_to_bedroom);
         guestbedroom.addItem(bedroomkey);
+        //corridor.addItem(bedroomkey);
         
         // items in kitchen // 
         set_of_forks_and_knives = new Weapon("Set of forks and knives","This weapon is a set of silver forks and silver knives",2,40);
@@ -266,14 +271,14 @@ public class Game
     /**
      *  Main play routine.  Loops until end of play.
      */
-    public void play() 
+    public void play(Display d) 
     {            
        
-        createRooms();
-        createCharacters();
-        createItem();
+        //createRooms();
+        //createCharacters();
+        //createItem();
         printWelcome();
-        player = new Player("player");
+
         Boolean exam;
         exam = false;
        /* player.addItem(necklace_red);
@@ -292,25 +297,25 @@ public class Game
         step3Finish = false;
         // All the characters are in the poolroom and the exit opens only after speak with all the characters //
         Boolean canSpeak; // player can speak with PNG
-        Boolean speak_with_mr_Taylor, speak_with_ms_Taylor, speak_with_ms_Cunningham, speak_with_chambermaid, speak_with_bob_Taylor, speak_with_mr_Cunningham;
-        Boolean speak_with_ms_Wellington, speak_with_valet, speak_with_caretaker, speak_with_mr_Wellington, speak_with_nina_Taylor;
+        //Boolean speak_with_mr_Taylor, speak_with_ms_Taylor, speak_with_ms_Cunningham, speak_with_chambermaid, speak_with_bob_Taylor, speak_with_mr_Cunningham;
+        //Boolean speak_with_ms_Wellington, speak_with_valet, speak_with_caretaker, speak_with_mr_Wellington, speak_with_nina_Taylor;
         Boolean find_bob_Taylor;
         Boolean toys_not_front_of_door = null;
         Boolean firstEnter;
         firstEnter = true;
         
         canSpeak = false;
-        speak_with_mr_Taylor = false;
-        speak_with_ms_Taylor = false;
-        speak_with_ms_Cunningham = false;
-        speak_with_chambermaid = false;
-        speak_with_bob_Taylor = false;
-        speak_with_mr_Cunningham = false;
-        speak_with_ms_Wellington = false;
-        speak_with_valet = false;
-        speak_with_caretaker = false;
-        speak_with_mr_Wellington = false;
-        speak_with_nina_Taylor = false;
+        //speak_with_mr_Taylor = false;
+        //speak_with_ms_Taylor = false;
+        //speak_with_ms_Cunningham = false;
+        //speak_with_chambermaid = false;
+        //speak_with_bob_Taylor = false;
+        //speak_with_mr_Cunningham = false;
+        //speak_with_ms_Wellington = false;
+        //speak_with_valet = false;
+        //speak_with_caretaker = false;
+        //speak_with_mr_Wellington = false;
+        //speak_with_nina_Taylor = false;
 
         if (exam)
         {
@@ -334,13 +339,20 @@ public class Game
             +" Alfred the Valet has curly blond hair. He seems to be bother. \n"
             +" Sam the caretaker is a black-haired black man. ");
         }
-        if (speak_with_mr_Taylor && speak_with_ms_Taylor && speak_with_ms_Cunningham && speak_with_chambermaid && speak_with_bob_Taylor && speak_with_mr_Cunningham
-                && speak_with_ms_Wellington && speak_with_valet && speak_with_caretaker && speak_with_mr_Wellington && speak_with_nina_Taylor && exam)
+        //if (speak_with_mr_Taylor && speak_with_ms_Taylor && speak_with_ms_Cunningham && speak_with_chambermaid && speak_with_bob_Taylor && speak_with_mr_Cunningham
+                //&& speak_with_ms_Wellington && speak_with_valet && speak_with_caretaker && speak_with_mr_Wellington && speak_with_nina_Taylor && exam)
+        boolean speakToAll = true;
+        for (boolean b:d.getDisplaySpeak().getListOfBoolean())
+        {
+            if (!b){speakToAll = false;}
+        }
+        
+        if (speakToAll)
         {
             canSpeak = false;
             step1Finish = true;
             poolroom.modifyExit("east");
-            speak_with_mr_Taylor = false;
+            /*speak_with_mr_Taylor = false;
             speak_with_ms_Taylor = false;
             speak_with_ms_Cunningham = false;
             speak_with_chambermaid = false;
@@ -350,7 +362,7 @@ public class Game
             speak_with_valet = false;
             speak_with_caretaker = false;
             speak_with_mr_Wellington = false;
-            speak_with_nina_Taylor = false;
+            speak_with_nina_Taylor = false;*/
         }
 
         // Step 2 : banqueting hall //
@@ -376,10 +388,10 @@ public class Game
                 canSpeak = true;
                 exam = false;
                 }
-                if (speak_with_nina_Taylor)
+                if (d.getDisplaySpeak().isNina_Taylor())
                 {
                 nina_Taylor.setText("These are my brother toys. Find him to tidy his toys");
-                speak_with_nina_Taylor = false;
+                //speak_with_nina_Taylor = false;
                 canSpeak = false;
                 }
             }
@@ -419,12 +431,12 @@ public class Game
                  exam = false;
                  canSpeak = true;
                 }
-                if (speak_with_bob_Taylor)
+                if (d.getDisplaySpeak().isBob_Taylor())
                 {
                     System.out.println("You convince Bob to tidy up his toys.");
                     toys_not_front_of_door = true;
                     canSpeak = false;
-                    speak_with_bob_Taylor = false;
+                    //speak_with_bob_Taylor = false;
                 }
                 if (toys_not_front_of_door) 
                 {
@@ -445,7 +457,7 @@ public class Game
                 exam = false;
                 canSpeak = true;
             }
-            if (speak_with_ms_Cunningham)
+            if (d.getDisplaySpeak().isMs_Cunningham())
             {
                ms_Cunningham.setText("Oh, good morning ! I am happy to see you. Unlike the dark atmosphere of the mansion it is a beautiful weather outside. \n"
                 + "I hope your investigation is progressing well. I am scared that the murderer is still at liberty. I cannot sleep properly since the night of the murder. Ah ! I know, you are going to dance with me. It will make me think of something other than this dark situation. \n"
@@ -455,7 +467,7 @@ public class Game
                System.out.println("You spoke and danced a lot of time with Ms Cunningham. Then you are very tired so you lose one healthpoint");
                player.setHP(player.getHP() - 1);
                canSpeak = false;
-               speak_with_ms_Cunningham = false;
+               //speak_with_ms_Cunningham = false;
             }
             firstEnter = false;
             }   
@@ -467,11 +479,11 @@ public class Game
                 exam = false;
                 canSpeak = true;  
             }
-            if (speak_with_ms_Cunningham)
+            if (d.getDisplaySpeak().isMs_Cunningham())
             {
                ms_Cunningham.setText("Thank you. I feel better thanks to you.");
                canSpeak = false;
-               speak_with_ms_Cunningham = false;
+               //speak_with_ms_Cunningham = false;
             }
           }
         }
@@ -503,9 +515,9 @@ public class Game
                     + "On the painting, a gramophone is pictured on a sideboard. The gramophone on the painting curiously looks like the gramophone in the dancing room. \n"
                     + "When you inspect the sideboard on the real library you see some wear marks as if an object was previously placed on it. \n"
                     + "You meet the chambermaid wanting to leave the library. She seems to want to tell you something but do not dare to approach you.");
-                    speak_with_chambermaid = true;
+                    //speak_with_chambermaid = true;
                 }
-                if (speak_with_chambermaid)
+                if (d.getDisplaySpeak().isChambermaid())
                 {
                     chambermaid.setText("I saw Nina Taylor go to the gardener hut some nights. I do not know what she is doing there. ");
                 }
@@ -534,6 +546,7 @@ public class Game
     }
     }
     
+    
 
     
     /**
@@ -541,7 +554,7 @@ public class Game
      *
      */
     
-    private void printExits ()
+    public void printExits ()
     {
         System.out.println("You are in the " + currentRoom.getDescription());
         System.out.print("Exits: ");
