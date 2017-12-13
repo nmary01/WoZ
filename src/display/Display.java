@@ -17,7 +17,7 @@ public class Display extends JFrame {
 
     private JMenuBar menuBar;
     private JMenu menu1, menu2, menu3, menu4, menu5;
-    private JButton examiner, prendre, drop, non, parler, journal, haut, bas, nord, sud, est, ouest;
+    private JButton examiner, prendre, drop, use, parler, journal, haut, bas, nord, sud, est, ouest;
     private JPanel display, interaction, action, inventory, moves, direction, floor, diary_hp, item, player, textAreaLayout, image, northPanel, southPanel, westPanel, eastPanel, upPanel, downPanel, journalPanel;
     private JLabel hp, inventaire, screen;
     private JTextArea textArea;
@@ -26,9 +26,12 @@ public class Display extends JFrame {
     private DisplaySpeak displaySpeak;
     private DisplayTake displayTake;
     private DisplayDrop displayDrop;
+    private DisplayUse displayUse;
     private JScrollPane scroll;
     private Game g;
-    private static boolean step1_done, exam_step1, exam;
+    private static boolean step2_done= false, step1_done = false, step3_done=false;
+    private static boolean /*exam_step1,*/ exam = false;
+    private static boolean exam_step1;
     //private JScrollPane textAreaLayout;
     //private Image img;
 
@@ -42,12 +45,13 @@ public class Display extends JFrame {
 
     public void generateDisplay(Game g) {
 
-        step1_done = false;
-
+        //step1_done = false;
+        //exam =false;
         Display frame = this;
         this.setTitle("AMONG US");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
+        //this.getContentPane().setBackground(new Color(0,0,0));
 
         displaySpeak = new DisplaySpeak(frame);
         displaySpeak.setVisible(false);
@@ -91,7 +95,7 @@ public class Display extends JFrame {
         //interaction.setMaximumSize(new Dimension(1142,100));
         //interaction.setBounds(0,0, 50, 50);
 
-        action = new JPanel(); // comprend tous les boutons suivant : examiner, prendre, oui, non, parler
+        action = new JPanel(); // comprend tous les boutons suivant : examiner, prendre, oui, use, parler
         action.setLayout(new BoxLayout(action, BoxLayout.Y_AXIS));
 
         //Partie de Droite
@@ -123,25 +127,31 @@ public class Display extends JFrame {
         examiner = new JButton("Examine");
         examiner.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
+
                 step1();
-                if (!step1_done){
-                    textArea.append(">You are in the poolroom.\n>Mr Taylor was founded by the Chambermaid this morning when she came to clean the poolroom. Her scream attracted everyone.\n>You notice that it is missing a pool cue and you find a strange red necklace nearby the pool.\n>You examine the dead body and you notice a circular wound with the same diameter of a pool cue and some splinters of wood at the bottom of the neck.\n" +
-                    ">Take advantage that everyone is here to question them.\n");
-                    exam_step1=true;
-                    exam=true;
+                if (!step1_done) {
+                    exam_step1 = true;
+                    textArea.append(">You are in the poolroom.\n>Mr Taylor was founded by the Chambermaid this morning when she came to clean the poolroom. Her scream attracted everyone.\n>You notice that it is missing a pool cue and you find a strange red necklace nearby the pool.\n>You examine the dead body and you notice a circular wound with the same diameter of a pool cue and some splinters of wood at the bottom of the neck.\n"
+                        + ">Take advantage that everyone is here to question them.\n");
+                }
+                else textArea.append("> You are looking for something interesting in this room");
+                if (!g.getCurrent().isExamined()){
+                    g.getCurrent().setExamined(true);
                     //remove(prendre);
                     remove(action);
-                    prendre.setEnabled(exam);
+                    prendre.setEnabled(g.getCurrent().isExamined());
                     interaction.add(action);
-                    //action.add(prendre);
-                    //generateDisplay(g);
-                    updatePlayer(g);
                 }
+
+                updatePlayer(g);
+
+
             }
         });
 
         prendre = new JButton("Take");
-        prendre.setEnabled(exam);
+        //prendre.setEnabled(g.getCurrent().isExamined());
+        prendre.setEnabled(false);
         prendre.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 displayTake = new DisplayTake(frame);
@@ -152,20 +162,31 @@ public class Display extends JFrame {
         parler.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 displaySpeak = new DisplaySpeak(frame);
+                if (step1_done && g.getCurrent().getDescription().equals("Cellar")){
+                    step2_done=true;
+                    g.getBanquetinghall().modifyExit("south");
+                }
+                if(step2_done && g.getCurrent().getDescription().equals("Dancing Room")){
+                    step3_done=true;
+                    g.getPlayer().setHP(g.getPlayer().getHP() - 1);
+                    updatePlayer(g);
+                    
+                }
             }
         });
 
         drop = new JButton("Drop");
+
         drop.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 displayDrop = new DisplayDrop(frame);
             }
         });
 
-        non = new JButton("No");
-        non.addActionListener(new ActionListener() {
+        use = new JButton("Use");
+        use.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-
+                displayUse = new DisplayUse(frame);
             }
         });
 
@@ -274,13 +295,39 @@ public class Display extends JFrame {
             public void actionPerformed(ActionEvent evt) {
                 for (Exit i : g.getCurrent().getListExits()) {
                     if (i.getDirection().equals("east")) {
-                        step1();
+                        if (!step1_done) {
+                            step1();
+                        }
                         if (step1_done) {
                             if (i.getOpened()) {
+                                for (PNG png:g.getListOfPNG())
+                                {
+                                    if(png.getName().equals("Bob Taylor")){
+                                        png.setRoom(g.getCellar());
+                                        png.setText("Ok, I go to tidy my toys");
+                                    }
+                                    if(png.getName().equals("Nina Taylor")){
+                                        png.setRoom(g.getBanquetinghall());
+                                        png.setText("These are my brother toys. Find him to tidy his toys");
+                                    }
+                                    if(png.getName().equals("Ms Cunningham")){
+                                        png.setRoom(g.getDancingroom());
+                                        png.setText("Oh, good morning ! I am happy to see you. Unlike the dark atmosphere of the mansion it is a beautiful weather outside. \n"
+                                    + "I hope your investigation is progressing well. I am scared that the murderer is still at liberty. I cannot sleep properly since the night of the murder. Ah ! I know, you are going to dance with me. It will make me think of something other than this dark situation. \n"
+                                    + "Sorry I walked on your feet. Do I hurt you not too much ? I can be very clumsy.");
+                                    }
+                                    
+                                }
                                 Command co = new Command("go", "east");
                                 g.goRoom(co);
                                 deplacement(g);
                                 textArea.append("> You are in the " + g.getCurrent().getDescription() + "\n");
+                                if(g.getCurrent().getDescription().equals("Banqueting hall"))
+                                {
+                                    textArea.append("> When you opened the poolroom door, you shut on a toy so you lose one HealthPoint");
+                                    g.getPlayer().setHP(g.getPlayer().getHP() - 1);
+                                    updatePlayer(g);
+                                }
                                 break;
                             } else {
                                 textArea.append(i.getTextBlock() + "\n");
@@ -379,14 +426,16 @@ public class Display extends JFrame {
         action.add(prendre);
         action.add(drop);
         action.add(parler);
-        action.add(non);
+        action.add(use);
 
         //inventory.add(inventaire);
         inventory.setBorder(BorderFactory.createTitledBorder("Inventory"));
 
         JPanel items = new JPanel();
         items = getItems(g);
+        //items.setBackground(new Color(63,52,43));
 
+        //player.setBackground(new Color(71,58,48));
         diary_hp.add(journalPanel);
         diary_hp.add(hp);
 
@@ -541,18 +590,24 @@ public class Display extends JFrame {
     }
 
     public void deplacement(Game g) {
+        
         remove(image);
+        remove(action);
+        //remove(interaction);
         remove(display);
         remove(moves);
         remove(direction);
         remove(floor);
         remove(menuBar);
         remove(player);
-
+        remove(this);
+        remove (prendre);
+        //exam = false;
         background = displayRoom(g);
         generateDisplay(g);
+        System.out.println(g.getCurrent().isExamined());
     }
-    
+
     public void updatePlayer(Game g) {
         remove(moves);
         remove(direction);
@@ -584,9 +639,9 @@ public class Display extends JFrame {
             }
         }
         System.out.println("-----------------------------------------");
-        if (speakToAll) {
+        if (speakToAll && exam_step1) {
             g.getCurrent().modifyExit("east");
-            step1_done=true;
+            step1_done = true;
         }
     }
 
