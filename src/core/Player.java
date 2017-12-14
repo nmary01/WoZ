@@ -284,6 +284,10 @@ public class Player
     public void setNbItemInInventory(int nbItemInInventory) {
         this.nbItemInInventory = nbItemInInventory;
     }
+
+    public void setArmed(boolean armed) {
+        this.armed = armed;
+    }
     
     
 }
