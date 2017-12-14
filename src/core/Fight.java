@@ -1,6 +1,9 @@
 package core;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -25,16 +28,6 @@ public class Fight
     {
         this.player = player;
         this.enemy = enemy;
-    }
-    
-    public void theFight()
-    {
-    	while (endFight())
-		{
-    		attackPlayer(); //the player attack
-    		attackEnemy(); // the enemy attack
-		}
-    	checkHealth();
     }
 
     /**
@@ -141,16 +134,18 @@ public class Fight
     public void loose()
     {
     	JFrame frame = new JFrame();
-    	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     	
-    	JLabel loose = new JLabel("GAME OVER",SwingConstants.CENTER);
+        Icon go = new ImageIcon(getClass().getResource("..\\pictures\\Rooms\\game_over.png"));
+    	//JLabel loose = new JLabel("GAME OVER",SwingConstants.CENTER);
+        JLabel loose = new JLabel(go);
     	frame.getContentPane().add(loose);
     	
     	frame.setLocationRelativeTo(null);
     	frame.pack();
-       	frame.setVisible(true);	   
-       	
-       	//System.exit(0);
+       	frame.setVisible(true);
+        
+         
     }
     
     
@@ -162,11 +157,11 @@ public class Fight
     {
     	if(enemy.getHP() <=0 || player.getHP() <=0)
         {
-            return false;
+            return true;
         }
         else 
         {
-        	return true;
+            return false;
         }
     }
     

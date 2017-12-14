@@ -30,7 +30,7 @@ public class Game
     private Room attic;
     private Neutral mr_Taylor, ms_Taylor, ms_Cunningham;
     private Ally chambermaid, bob_Taylor, mr_Cunningham, ms_Wellington;
-    private Enemy valet, caretaker, mr_Wellington, nina_Taylor, ghost; 
+    private Enemy valet, caretaker, mr_Wellington, nina_Taylor, ghost, statue, rat_bear; 
     private Player player;
     private Item necklace_red, gramophone, candelar;
     private Potion potion2HP, potion6HP;
@@ -58,19 +58,19 @@ public class Game
         dancingroom = new Room ("Dancing Room", "..\\pictures\\Rooms\\bal.png");
         kitchen = new Room("Kitchen", "..\\pictures\\Rooms\\cuisine.png");
         garden = new Room("Garden","..\\pictures\\Rooms\\garden.png");
-        well = new Room("Well", null);
+        well = new Room("Well", "..\\pictures\\Rooms\\well.png");
         gardenerhut = new Room("Gardener hut", "..\\pictures\\Rooms\\hut.png");
             //Fin RDN //
             
             //-1//
-        anteroom = new Room("Anteroom", null);
-        ritualroom = new Room("Ritual Room", null);
+        anteroom = new Room("Anteroom", "..\\pictures\\Rooms\\anteroom.png");
+        ritualroom = new Room("Ritual Room", "..\\pictures\\Rooms\\ritualroom.png");
         cellar = new Room("Cellar", "..\\pictures\\Rooms\\cave.png");
             // FIN -1//
             // +1 //
         livingroom = new Room("Living Room", "..\\pictures\\Rooms\\salon.png"); 
         library = new Room ("Library", "..\\pictures\\Rooms\\bibliotheque.png");
-        laboratory = new Room("Laboratory", null);
+        laboratory = new Room("Laboratory", "..\\pictures\\Rooms\\laboratory.png");
         corridor= new Room("Corridor", "..\\pictures\\Rooms\\couloir.png");
         bathroom = new Room("Bathroom", "..\\pictures\\Rooms\\salledebain.png");
         bedroom = new Room("Bedroom", "..\\pictures\\Rooms\\chambre1.png");
@@ -157,6 +157,9 @@ public class Game
         caretaker = new Enemy("Caretaker","I was in my hut to repair the fork",poolroom, 2,20,5, "..\\pictures\\Characters\\caretaker.png"); // damage =2 accuraccy = 20, HP=5
         mr_Wellington = new Enemy("Mr Wellington","I was in the dancing room with my wife", poolroom, 1,10,7, "..\\pictures\\Characters\\MrWellington2.png"); // damage =1 accuraccy = 10, HP=7
         nina_Taylor = new Enemy("Nina Taylor", "I was in the library and I read a good book", poolroom, 2, 30, 8,"..\\pictures\\Characters\\NinaTaylor2.png"); // damage =2 accuraccy = 30, HP=8
+        statue = new Enemy("Statue", "I was in the corridor", corridor, 5, 15, 2,"..\\pictures\\Characters\\Statue.png"); // damage =2 accuraccy = 30, HP=8
+        rat_bear = new Enemy("Rat / Bear", "I was in the ritual room", anteroom, 10, 20, 6,"..\\pictures\\Characters\\Rat_bear.png");
+        ghost = new Enemy("Casper the Ghost", "A little green ghost", livingroom, 1, 50, 4, "..\\pictures\\Characters\\ghost.png");
         
         listOfPNG = new ArrayList();
         listOfPNG.add(ms_Taylor);
@@ -208,8 +211,8 @@ public class Game
         kitchen.addItem(set_of_forks_and_knives);
         
         // items in bedroom //
-        Item disk = new Item("Disk","This disk can be used with the gramophone");
-        bedroom.addItem(disk);
+        //Item disk = new Item("Disk","This disk can be used with the gramophone");
+        //bedroom.addItem(disk);
         
         Potion potion3HP = new Potion ("Potion3HP","This potions gives 3 HP to the player",3);
         bedroom.addItem(potion3HP);
@@ -958,6 +961,22 @@ public class Game
 
     public Room getAttic() {
         return attic;
+    }
+
+    public Enemy getGhost() {
+        return ghost;
+    }
+
+    public void setCurrentRoom(Room currentRoom) {
+        this.currentRoom = currentRoom;
+    }
+
+    public Enemy getStatue() {
+        return statue;
+    }
+
+    public Enemy getRat_bear() {
+        return rat_bear;
     }
     
     

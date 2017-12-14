@@ -36,6 +36,7 @@ public class DisplayDrop extends JFrame {
                         display.getG().getCurrent().addItem(i);
                         display.getG().getPlayer().getInventory().remove(i);
                         display.getG().getPlayer().setNbItemInInventory(display.getG().getPlayer().getNbItemInInventory()-1);
+                        if (i instanceof Weapon){display.getG().getPlayer().setArmed(false);}
                         d.dispose();
                         display.updatePlayer(display.getG());
                     }

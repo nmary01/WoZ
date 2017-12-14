@@ -27,7 +27,7 @@ public class Player
     public Player(String name)
     {
         this.name=name;
-        healthPoints = 10;
+        healthPoints = 50;
         armed = false;
         inventory = new ArrayList();
         diary = new ArrayList();
@@ -181,9 +181,9 @@ public class Player
      */
     public void heal(Potion potion)
     {
-        if ((healthPoints+ potion.getHeal()) > 10)
+        if ((healthPoints+ potion.getHeal()) > 50)
         {
-          healthPoints=10;  
+          healthPoints=50;  
         }
         else
         {

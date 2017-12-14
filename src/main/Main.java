@@ -19,7 +19,7 @@ public class Main {
         Game g = new Game();
         //For the fight
         Room poolroom = new Room ("PoolRoom", "..\\pictures\\Rooms\\billard.png");
-        Enemy mr_Wellington = new Enemy("Mr Wellington","I was in the dancing room with my wife", poolroom, 15,10,7, null);
+        Enemy mr_Wellington = new Enemy("Mr Wellington","I was in the dancing room with my wife", poolroom, 8,100,60, null);
         //
         
         g.createRooms();
@@ -28,10 +28,11 @@ public class Main {
         Display window = new Display(g);
         window.generateDisplay(g);
         g.play(window);
-        DisplayFight df =new DisplayFight(g.getPlayer(), mr_Wellington);
-        Potion p = new Potion ("Potion 1HP", "Coucou", 1);
-        g.getPlayer().addItem(p);
-        df.displayFight(g.getPlayer(), mr_Wellington);
+        //DisplayChest dc = new DisplayChest(window);
+        //DisplayFight df =new DisplayFight(g.getPlayer(), mr_Wellington);
+        //Potion p = new Potion ("Potion 1HP", "Coucou", 1);
+        //g.getPlayer().addItem(p);
+        //df.displayFight(window);
         //DisplaySpeak windowSpeak = new DisplaySpeak(g);
         //DisplayFight windowFight = new DisplayFight(g, mr_Wellington);
     }

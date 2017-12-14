@@ -29,9 +29,10 @@ public class Display extends JFrame {
     private DisplayUse displayUse;
     private JScrollPane scroll;
     private Game g;
-    private static boolean step2_done= false, step1_done = false, step3_done=false;
+    private static boolean step2_done= false, step1_done = false, step3_done=false, step4_done=false, step5_done=false, step6_done=false, step7_done=false, step8_done=false;
     private static boolean /*exam_step1,*/ exam = false;
     private static boolean exam_step1;
+    private boolean disk_present, gram_present;
     //private JScrollPane textAreaLayout;
     //private Image img;
 
@@ -134,13 +135,68 @@ public class Display extends JFrame {
                     textArea.append(">You are in the poolroom.\n>Mr Taylor was founded by the Chambermaid this morning when she came to clean the poolroom. Her scream attracted everyone.\n>You notice that it is missing a pool cue and you find a strange red necklace nearby the pool.\n>You examine the dead body and you notice a circular wound with the same diameter of a pool cue and some splinters of wood at the bottom of the neck.\n"
                         + ">Take advantage that everyone is here to question them.\n");
                 }
-                else textArea.append("> You are looking for something interesting in this room");
+                else textArea.append("> You are looking for something interesting in this room\n");
                 if (!g.getCurrent().isExamined()){
                     g.getCurrent().setExamined(true);
                     //remove(prendre);
                     remove(action);
                     prendre.setEnabled(g.getCurrent().isExamined());
                     interaction.add(action);
+                }
+                if (step5_done && !step6_done && g.getCurrent().getDescription().equals("Bedroom"))
+                {
+                    textArea.append("There is a safe-chest. To open it, you need a code with 5 numbers. Try to ask the guest to obtain it\n");
+                    step6_done=true;
+                    for (PNG png:g.getListOfPNG()){
+                    if (png.getName().equals("Nina Taylor")){
+                        png.setRoom(g.getDancingroom());
+                        png.setText("I have a enigm for you. It will give you the 1st number:\nBob Taylor has fallen into a 10-meter deep well and is trying to pull it up. \n "
+                                                + "Each day it rises 3 meters and slides 2 meters during the night.\n"
+                                                + "How many days will it take to get to the surface?\n");
+                        
+                    }
+                    if(png.getName().equals("Ms Wellington")){
+                        png.setRoom(g.getLibrary());
+                        png.setText("My enigm will give you the 4th and 5th numbers:\nIn a girl group\n"
+                                                + " 70% wear a blue sweater\n"
+                                                + " 75% wear blue pants\n"
+                                                + " 85% wear a blue hat\n"
+                                                + " 85% wear a blue coat\n"
+                                                + "What is the minimum percentage of girls wearing only blue clothes?\n");
+                        
+                    }
+                    if (png.getName().equals("Bob Taylor")){
+                        png.setRoom(g.getLibrary());
+                        png.setText("I saw my sister and my father arguing before his death.\n");
+                    }
+                    
+                    if (png.getName().equals("Ms Cunningham")){
+                        png.setRoom(g.getLibrary());
+                        png.setText("Mr Taylor always hear some music in this room\nThat is strange that the gramophone is not here...\n");
+                    }
+                    
+                    if (png.getName().equals("Mr Cunningham")){
+                        png.setRoom(g.getPoolroom());
+                        png.setText("My enigm will give you the 2nd and 3rd numbers.\nDavid is 10 years old and his younger brother is half his age.\n"
+                                                + "When David will be 10 times older, how old will Franck be?\n");
+                    }
+                    }
+                }
+                if (step6_done && !step7_done && g.getCurrent().getDescription().equals("Bedroom")){
+                    DisplayChest dc= new DisplayChest(frame);
+                }
+                
+                if(step7_done && g.getCurrent().getDescription().equals("Library")){
+                    for(Item i : g.getCurrent().getListOfItems()){
+                        if (i.getName().equals("Disk")) disk_present=true;
+                        if (i.getName().equals("Gramophone"))gram_present=true;
+                    }
+                    if (disk_present && gram_present){
+                        textArea.append("> You find a secret door ! When the gramophone plays music, a bookcase moves and a door appears behind\n");
+                        g.getCurrent().setExits("north", g.getLaboratory(), true, null);
+                        updatePlayer(g);
+                        step8_done=true;
+                    }
                 }
 
                 updatePlayer(g);
@@ -162,15 +218,33 @@ public class Display extends JFrame {
         parler.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 displaySpeak = new DisplaySpeak(frame);
-                if (step1_done && g.getCurrent().getDescription().equals("Cellar")){
+                if (step1_done && g.getCurrent().getDescription().equals("Cellar") && !step2_done){
                     step2_done=true;
                     g.getBanquetinghall().modifyExit("south");
                 }
-                if(step2_done && g.getCurrent().getDescription().equals("Dancing Room")){
+                if(step2_done && g.getCurrent().getDescription().equals("Dancing Room")&& !step3_done){
                     step3_done=true;
                     g.getPlayer().setHP(g.getPlayer().getHP() - 1);
                     updatePlayer(g);
+                    for (PNG png:g.getListOfPNG()){
+                        if (png.getName().equals("Chambermaid")){
+                            png.setRoom(g.getLibrary());
+                            png.setText("I saw Nina Taylor go to the gardener hut some nights. I do not know what she is doing there. ");
+                        }
+                        if (png.getName().equals("Mr Cunningham")){
+                            png.setRoom(g.getGuestbedroom());
+                            png.setText("It is strange, last time this canvas was not here.");
+                        }
+                        if (png.getName().equals("Ms Taylor"))
+                        {
+                            png.setRoom(g.getBedroom());
+                            png.setText("Oh no ! I am forgetting the number code ! Please, ask to my daughter, my guests and my employees. I gave to several of them a piece of this code.");
+                        }
+                    }
                     
+                }
+                if(step4_done && g.getCurrent().getDescription().equals("Guest BedRoom")&& !step5_done){
+                    step5_done=true;
                 }
             }
         });
@@ -379,6 +453,20 @@ public class Display extends JFrame {
                             g.goRoom(co);
                             deplacement(g);
                             textArea.append("> You are in the " + g.getCurrent().getDescription() + "\n");
+                            if (step3_done && g.getCurrent().getDescription().equals("Living Room")&& !step4_done){
+                                DisplayFight ghostfight=new DisplayFight(g.getPlayer(), g.getGhost());
+                                //frame.setVisible(false);
+                                ghostfight.displayFight(Display.this);
+                                ghostfight.toFront();
+                                //frame.setVisible(false);
+                                //frame.setVisible(true);
+                                /*if (ghostfight.isWin()){
+                                    updatePlayer(g);
+                                    frame.setVisible(true);
+                                    textArea.append("> Congrats, you win the fight !");
+                                }*/
+                                step4_done=true;
+                            }
                             break;
                         } else {
                             textArea.append(i.getTextBlock() + "\n");
@@ -645,4 +733,25 @@ public class Display extends JFrame {
         }
     }
 
+    public static boolean isStep4_done() {
+        return step4_done;
+    }
+
+    public static void setStep4_done(boolean step4_done) {
+        Display.step4_done = step4_done;
+    }
+
+    public static boolean isStep5_done() {
+        return step5_done;
+    }
+
+    public static void setStep5_done(boolean step5_done) {
+        Display.step5_done = step5_done;
+    }
+
+    public static void setStep7_done(boolean step7_done) {
+        Display.step7_done = step7_done;
+    }
+
+    
 }

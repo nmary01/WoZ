@@ -23,13 +23,17 @@ public class DisplayFight extends JFrame {
     private JTextArea textArea;
     private JScrollPane scroll;
     private Enemy enemy;
+    private boolean win;
+    private Display d;
     
     public DisplayFight(Player p, Enemy e) {
         player=p;
         enemy=e;
     }
     
-    public void displayFight(Player p, Enemy e) {
+    public void displayFight(Display d) {
+        
+        this.d=d;
         
         DisplayFight frame = this;
         
@@ -37,12 +41,10 @@ public class DisplayFight extends JFrame {
         
         this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
         
-        this.setTitle("Fight against "+ e.getName());
+        //this.setTitle("Fight against "+ enemy.getName());
         
         textArea=new JTextArea();
-        fight= new Fight(p,e);
-        player =p;
-        
+        fight= new Fight(player,enemy);        
         textAreaLayout=new JPanel();
         textAreaLayout.setLayout(new BoxLayout(textAreaLayout, BoxLayout.X_AXIS));
         textAreaLayout.setPreferredSize(new Dimension(800, 50));
@@ -56,10 +58,19 @@ public class DisplayFight extends JFrame {
         attack.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt)
             {
-                updateFrame(player, e);
+                updateFrame(player, enemy);
                 fight.attackPlayer();
                 if (fight.randomPlayerAccuracy()){
                     textArea.append("You hit your enemy !\n");
+                    if(fight.endFight()){
+                        dispose();
+                        //d.getG().setCurrentRoom(d.getG().getLivingroom());
+                        //d.setVisible(true);
+                        //d.deplacement(d.getG());
+                        //d.updatePlayer(d.getG());
+                        //d.generateDisplay(d.getG());
+                        d.getTextArea().append("> Congrats, you won the fight !\n");
+                    }
                 }
                 else textArea.append("You missed your attack...\n");
                 
@@ -68,6 +79,11 @@ public class DisplayFight extends JFrame {
                 fight.attackEnemy();
                 if (fight.randomEnemyAccuracy()){
                     textArea.append("Your enemy hits you...\n");
+                    if(fight.endFight()){
+                        dispose();
+                        //DisplayGO go= new DisplayGO();
+                        fight.loose();
+                    }
                 }
                 else textArea.append("Good! Your enemy failed his attack !\n");
                 fight.checkHealth();
@@ -85,8 +101,8 @@ public class DisplayFight extends JFrame {
             }
         });
         
-        enemyHp= new JLabel(e.getName()+"'s HP: "+Integer.toString(e.getHP()));
-        playerHp= new JLabel("Your HP: "+Integer.toString(p.getHP()), SwingConstants.RIGHT);
+        enemyHp= new JLabel(enemy.getName()+"'s HP: "+Integer.toString(enemy.getHP()));
+        playerHp= new JLabel("Your HP: "+Integer.toString(player.getHP()), SwingConstants.RIGHT);
         
         ImageIcon iBackground = new ImageIcon(getClass().getResource("..\\pictures\\Rooms\\bgFight.jpg"));
         Image i= iBackground.getImage();
@@ -106,6 +122,7 @@ public class DisplayFight extends JFrame {
         this.add(textAreaLayout);
         this.pack();
         this.setVisible(true);
+        this.toFront();
     }
     
     public void updateFrame(Player p, Enemy e)
@@ -117,7 +134,7 @@ public class DisplayFight extends JFrame {
         remove(textAreaLayout);
         remove(textArea);
         
-        displayFight(p, e);
+        displayFight(d);
     }
     
     public void setTextArea(String s) {
@@ -147,6 +164,10 @@ public class DisplayFight extends JFrame {
 
     public Enemy getEnemy() {
         return enemy;
+    }
+
+    public boolean isWin() {
+        return win;
     }
     
     
