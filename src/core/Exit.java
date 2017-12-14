@@ -27,6 +27,7 @@ public class Exit
         this.room = room;
         this.opened = opened;
         this.textBlock=textBlock;
+ 
     }
 
     /**

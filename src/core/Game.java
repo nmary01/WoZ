@@ -57,15 +57,15 @@ public class Game
         poolroom = new Room ("PoolRoom", "..\\pictures\\Rooms\\billard.png");
         dancingroom = new Room ("Dancing Room", "..\\pictures\\Rooms\\bal.png");
         kitchen = new Room("Kitchen", "..\\pictures\\Rooms\\cuisine.png");
-        garden = new Room("Garden", null);
+        garden = new Room("Garden","..\\pictures\\Rooms\\garden.png");
         well = new Room("Well", null);
-        gardenerhut = new Room("Gardener hut", null);
+        gardenerhut = new Room("Gardener hut", "..\\pictures\\Rooms\\hut.png");
             //Fin RDN //
             
             //-1//
         anteroom = new Room("Anteroom", null);
         ritualroom = new Room("Ritual Room", null);
-        cellar = new Room("Cellar", null);
+        cellar = new Room("Cellar", "..\\pictures\\Rooms\\cave.png");
             // FIN -1//
             // +1 //
         livingroom = new Room("Living Room", "..\\pictures\\Rooms\\salon.png"); 
@@ -77,7 +77,7 @@ public class Game
         guestbedroom = new Room("Guest Bedroom", "..\\pictures\\Rooms\\chambre2.png"); 
             //FIN +1 //
             //+2//
-        attic = new Room("Attic", null);
+        attic = new Room("Attic", "..\\pictures\\Rooms\\grenier.png");
             //Fin +2//
         //Fin create room //    
             
@@ -86,8 +86,8 @@ public class Game
         hall.setExits("north",garden, false, "> You must explore the mansion before");
         hall.setExits("south",banquetinghall, true, null);  
         banquetinghall.setExits("north",hall, true, null);
-        //banquetinghall.setExits("south",dancingroom, false, "> The door is blocked by Bob's toys");
-        banquetinghall.setExits("south",dancingroom, true, null);//version test
+        banquetinghall.setExits("south",dancingroom, false, "> The door is blocked by Bob's toys");
+        //banquetinghall.setExits("south",dancingroom, true, null);//version test
         banquetinghall.setExits("east",kitchen, true, null);
         banquetinghall.setExits("west",poolroom, true, null);
         poolroom.setExits("east",banquetinghall, false, "> You have not finished examining the crime scene");
@@ -153,8 +153,8 @@ public class Game
         ms_Wellington = new Ally("Ms Wellington", "I was in the dancing room with my husband. The chambermaid served us.", poolroom, item_ms_Wellington, "..\\pictures\\Characters\\MsWellington2.png");
         
         // Enemy characters ceration //
-        valet = new Enemy("Valet","I was in the kitchen. I checked the wine delivery", poolroom,4,80,12,"..\\pictures\\Characters\\NinaTaylor2.png"); // damage =4 accuraccy = 80, HP=12
-        caretaker = new Enemy("Caretaker","I was in my hut to repair the fork",poolroom, 2,20,5, "..\\pictures\\Characters\\MrWellington2.png"); // damage =2 accuraccy = 20, HP=5
+        valet = new Enemy("Valet","I was in the kitchen. I checked the wine delivery", poolroom,4,80,12,"..\\pictures\\Characters\\valet.png"); // damage =4 accuraccy = 80, HP=12
+        caretaker = new Enemy("Caretaker","I was in my hut to repair the fork",poolroom, 2,20,5, "..\\pictures\\Characters\\caretaker.png"); // damage =2 accuraccy = 20, HP=5
         mr_Wellington = new Enemy("Mr Wellington","I was in the dancing room with my wife", poolroom, 1,10,7, "..\\pictures\\Characters\\MrWellington2.png"); // damage =1 accuraccy = 10, HP=7
         nina_Taylor = new Enemy("Nina Taylor", "I was in the library and I read a good book", poolroom, 2, 30, 8,"..\\pictures\\Characters\\NinaTaylor2.png"); // damage =2 accuraccy = 30, HP=8
         
@@ -883,6 +883,83 @@ public class Game
     public ArrayList<PNG> getListOfPNG() {
         return listOfPNG;
     }
+
+    public Room getAnteroom() {
+        return anteroom;
+    }
+
+    public Room getRitualroom() {
+        return ritualroom;
+    }
+
+    public Room getCellar() {
+        return cellar;
+    }
+
+    public Room getHall() {
+        return hall;
+    }
+
+    public Room getBanquetinghall() {
+        return banquetinghall;
+    }
+
+    public Room getDancingroom() {
+        return dancingroom;
+    }
+
+    public Room getPoolroom() {
+        return poolroom;
+    }
+
+    public Room getKitchen() {
+        return kitchen;
+    }
+
+    public Room getGarden() {
+        return garden;
+    }
+
+    public Room getWell() {
+        return well;
+    }
+
+    public Room getGardenerhut() {
+        return gardenerhut;
+    }
+
+    public Room getLivingroom() {
+        return livingroom;
+    }
+
+    public Room getLibrary() {
+        return library;
+    }
+
+    public Room getLaboratory() {
+        return laboratory;
+    }
+
+    public Room getCorridor() {
+        return corridor;
+    }
+
+    public Room getBedroom() {
+        return bedroom;
+    }
+
+    public Room getGuestbedroom() {
+        return guestbedroom;
+    }
+
+    public Room getBathroom() {
+        return bathroom;
+    }
+
+    public Room getAttic() {
+        return attic;
+    }
+    
     
     
 }

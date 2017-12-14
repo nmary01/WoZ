@@ -25,7 +25,7 @@ public class Room
     //The map of exits of the room.
     private List<Exit> mapRoom;
     private List<Item> listOfItems;
-    private boolean isValid;
+    private boolean isValid, examined;
     
     /**
      * Create a room described "description". Initially, it has
@@ -40,6 +40,7 @@ public class Room
         this.description = description;
         isValid=testValidity();
         this.image = image;
+        this.examined=false;
     }
 
     /**
@@ -117,5 +118,15 @@ public class Room
     {
         return image;
     }
+
+    public boolean isExamined() {
+        return examined;
+    }
+
+    public void setExamined(boolean examined) {
+        this.examined = examined;
+    }
+    
+    
 }
 

@@ -130,31 +130,15 @@ public class Player
      */
     public void addItem(Item item)
     {
-        if (nbItemInInventory<sizeInventory)
-        {
+        if (canTakeItem(item)){
+ 
+            inventory.add(item);
+            nbItemInInventory++; 
             if (item instanceof Weapon)
             {
-                if(!armed)
-                {
-                   inventory.add(item);
-                   nbItemInInventory++; 
-                   armed = true;
-                }
-                else
-                {           
-                System.out.println("Vous avez déjà une arme");
-                }
+
+                armed = true;
             }
-            else
-            {
-                inventory.add(item);
-                nbItemInInventory++;
-            }
-            
-        }
-        else
-        {
-            System.out.println("Votre inventaire est plein.");
         }
     }
     
@@ -222,13 +206,21 @@ public class Player
     /**
      * Return true if the player can take an item which is not a weapon (=inventory not full)
      */
-    /*public boolean canTakeItem()
+    public boolean canTakeItem(Item i)
     {
-        if (nbItemInInventory<sizeInventory && canTakeWeapon()){
-                return true;
+        if (nbItemInInventory<sizeInventory){
+            if(armed)
+            {
+                if(i instanceof Weapon)
+                {
+                    return false;
+                }
+                else return true;
             }
-            else{return false;}
-    }*/
+            else return true;
+        }
+        else return false;
+    }
     
     /**
      * Return true if the player can take a weapon ð inventory not full and player not armed)
@@ -284,5 +276,14 @@ public class Player
     public ArrayList<Item> getInventory() {
         return inventory;
     }
+
+    public int getNbItemInInventory() {
+        return nbItemInInventory;
+    }
+
+    public void setNbItemInInventory(int nbItemInInventory) {
+        this.nbItemInInventory = nbItemInInventory;
+    }
+    
     
 }

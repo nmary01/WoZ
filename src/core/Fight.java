@@ -1,6 +1,10 @@
 package core;
 
 import java.util.*;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 /**
  * Class Fight creates a fight with:
  * - a valid player
@@ -22,6 +26,16 @@ public class Fight
         this.player = player;
         this.enemy = enemy;
     }
+    
+    public void theFight()
+    {
+    	while (endFight())
+		{
+    		attackPlayer(); //the player attack
+    		attackEnemy(); // the enemy attack
+		}
+    	checkHealth();
+    }
 
     /**
      * This function calculate if the player attack will work or not
@@ -35,7 +49,7 @@ public class Fight
         int randomNumber;
    
         Random rand = new Random(); 
-        randomNumber = rand.nextInt(player.getWeapon().getAccuracy() - 0 + 1) + 0;
+        randomNumber = rand.nextInt(100+ 1);
         if (randomNumber < player.getWeapon().getAccuracy())
         {
             return true;
@@ -58,7 +72,7 @@ public class Fight
         int randomNumber;
    
         Random rand = new Random(); 
-        randomNumber = rand.nextInt(enemy.getAccuracy() - 0 + 1) + 0;
+        randomNumber = rand.nextInt(100+ 1);
         if (randomNumber < enemy.getAccuracy())
         {
             return true;
@@ -78,11 +92,13 @@ public class Fight
         if (randomPlayerAccuracy())
         {
             enemy.setHP(enemy.getHP()-player.getWeapon().getDamage());
+            System.out.println("Wow, you hit him");
         } 
         else
         {
-            System.out.println("Sorry. Your attack failed. Nothing happens.");
+            System.out.println("Sorry. Your attack failed. Nothing happens."); 
         }
+        //return randomPlayerAccuracy();
     }
     
     /**
@@ -91,14 +107,16 @@ public class Fight
      */
     public void attackEnemy()
     {
-        if (randomPlayerAccuracy())
+        if (randomEnemyAccuracy())
         {
             player.setHP(player.getHP()-enemy.getDamage());
+            System.out.println("Wow, he hit you");
         } 
         else
         {
             System.out.println("Good ! Your enemy failed");
         }
+        //return randomEnemyAccuracy();
     }
     
     /**
@@ -113,9 +131,45 @@ public class Fight
         }
         else if(player.getHP()<=0)
         {
-            System.out.println(enemy.getName()+" failed. Enemy wins !");
+        	loose();
         }
     }
+    
+    /**
+     * 
+     */
+    public void loose()
+    {
+    	JFrame frame = new JFrame();
+    	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	
+    	JLabel loose = new JLabel("GAME OVER",SwingConstants.CENTER);
+    	frame.getContentPane().add(loose);
+    	
+    	frame.setLocationRelativeTo(null);
+    	frame.pack();
+       	frame.setVisible(true);	   
+       	
+       	//System.exit(0);
+    }
+    
+    
+    /**
+     * To see if a fight is finished
+     * @return
+     */
+    public boolean endFight()
+    {
+    	if(enemy.getHP() <=0 || player.getHP() <=0)
+        {
+            return false;
+        }
+        else 
+        {
+        	return true;
+        }
+    }
+    
     
     /**
      * Method testValidity
