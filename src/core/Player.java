@@ -31,7 +31,6 @@ public class Player
         healthPoints = 50;
         armed = false;
         inventory = new ArrayList();
-        diary = new ArrayList();
         isValid = testValidity();
         nbItemInInventory = 0;
     }
@@ -154,27 +153,6 @@ public class Player
         }
     }
     
-    /**
-     * Save the steps made by the players
-     * It saves only important events which follow the major quest
-     * 
-     * @param text the string to add
-     */
-    public void addEntryDiary(String text)
-    {
-        diary.add(text);
-    }
-    
-    /**
-     * Print the diary in the terminal
-     */
-    public void showDiary()
-    {
-        for (String i : diary)
-        {
-            System.out.println(i);
-        }
-    }
     
     /**
      * Heal the player.

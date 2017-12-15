@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package display;
 import core.*;
 import javax.swing.*;
@@ -11,8 +6,12 @@ import java.awt.event.*;
 import javax.swing.text.DefaultCaret;
 
 /**
- *
- * @author Nathan
+ * This class allows user to make a fight against an enemy 
+ * When a fight begin, a new frame is created with two possible action for the player : attack or take a potion
+ * We can see the player's HP and them for the enemy
+ * A little textArea is at the bottom of the frame to indicate if the player touch his enemy 
+ * 
+ * @author WoZGrp4
  */
 public class DisplayFight extends JFrame {
 
@@ -26,11 +25,23 @@ public class DisplayFight extends JFrame {
     private boolean win;
     private Display d;
     
+    /**
+     * Constructor of the class displayFight
+     * 
+     * @param p player
+     * @param e enemy
+     */
     public DisplayFight(Player p, Enemy e) {
         player=p;
         enemy=e;
     }
     
+    /**
+     * Major class of the displayFight
+     * Manage the frame and all associated elements
+     * 
+     * @param d display
+     */
     public void displayFight(Display d) {
         
         this.d=d;
@@ -125,6 +136,12 @@ public class DisplayFight extends JFrame {
         this.toFront();
     }
     
+    /**
+     * This method is used to refresh the frame for the fight
+     * 
+     * @param p player
+     * @param e enemy
+     */
     public void updateFrame(Player p, Enemy e)
     {
         remove(buttons);
@@ -137,6 +154,10 @@ public class DisplayFight extends JFrame {
         displayFight(d);
     }
     
+    /**
+     * 
+     * @param s 
+     */
     public void setTextArea(String s) {
         textArea = new JTextArea(s);
         textArea.setLineWrap(true);
@@ -150,22 +171,47 @@ public class DisplayFight extends JFrame {
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
     }
 
+    /**
+     * Getter to know the background 
+     * 
+     * @return 
+     */
     public JPanel getImage() {
         return image;
     }
 
+    /**
+     * Getter to know the player and his caracteristics
+     * 
+     * @return 
+     */
     public Player getPlayer() {
         return player;
     }
 
+    /**
+     * Getter to know the number of HP for the player
+     * 
+     * @return 
+     */
     public JLabel getPlayerHp() {
         return playerHp;
     }
 
+    /**
+     * Getter to know the enemy
+     * 
+     * @return 
+     */
     public Enemy getEnemy() {
         return enemy;
     }
 
+    /**
+     * Function to know if the player win the fight
+     * 
+     * @return win  
+     */
     public boolean isWin() {
         return win;
     }

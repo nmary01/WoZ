@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package display;
 
 import core.*;
@@ -11,13 +6,23 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
- *
- * @author Nathan
+ * This class allows to drop an item in the current room
+ * The player choose the item to drop in his inventory in the form of a list of button
+ * The item is take off in the inventory
+ * Later, the player will have the choice to get back the item in the same place that it drop it
+ * 
+ * @author WoZGrp4
  */
 public class DisplayDrop extends JFrame {
     
     private JPanel panel;
 
+    /**
+     * Call the main class display to add on the frame the list of item dropable 
+     * 
+     * @param display
+     * @throws HeadlessException 
+     */
     public DisplayDrop(Display display) throws HeadlessException {
         
         DisplayDrop d = this;

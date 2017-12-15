@@ -1,19 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package display;
 import java.awt.*;
 import core.PNG;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import javax.swing.*;
 
 /**
- *
- * @author Nathan
+ * During the game we have to speak with some characters to have some clues and unlock some steps
+ * to speak with these characters we have to know which are in the current room
+ * a boolean is associated to a character to know if the player has spoken to a character
+ * 
+ * @author WoZGrp4
  */
 public class DisplaySpeak extends JFrame{
     
@@ -24,6 +22,12 @@ public class DisplaySpeak extends JFrame{
     private static boolean ms_Taylor, bob_Taylor, nina_Taylor, ms_Cunningham, mr_Cunningham, ms_Wellington, mr_Wellington, chambermaid, caretaker, valet;
     private Boolean[] listOfBoolean;
     
+    /**
+     * Call the main class for display to add on the frame the list of all characters in the room
+     * 
+     * @param f
+     * @throws HeadlessException 
+     */
     public DisplaySpeak(Display f) throws HeadlessException {
     
         DisplaySpeak d=this;
@@ -39,6 +43,7 @@ public class DisplaySpeak extends JFrame{
         panel.setLayout(new FlowLayout());
         //panel.add(ms_Taylor);
         
+        // list of characters with a boolean to know if the player speak with the character
         listOfBoolean = new Boolean[10];
         listOfBoolean[0]=ms_Taylor;
         listOfBoolean[1]=bob_Taylor;
@@ -53,17 +58,21 @@ public class DisplaySpeak extends JFrame{
 
         //for (JButton butt:listOfButtons)
         //{
+            // creation of the list of character 
             for (PNG png:f.getG().getListOfPNG())
             {
+                // display only character in the room : the description of the room and the character must be the same
                 if ((png.getRoom().getDescription())==(f.getG().getCurrent().getDescription()))
                 {
                     JButton button= new JButton(png.getName());
                     button.addActionListener(new ActionListener(){
                     public void actionPerformed(ActionEvent evt)
                     {
+                        // display the text of the character
                         System.out.println(png.getText());
                         f.getTextArea().append(png.getName()+": "+png.getText()+"\n");
                         d.dispose();
+                        // switch the boolean when we spoke with the character
                         switch(png.getName())
                         {
                             case "Ms Taylor": ms_Taylor=true;listOfBoolean[0]=ms_Taylor; break;
@@ -79,8 +88,7 @@ public class DisplaySpeak extends JFrame{
                             default: f.getTextArea().append("Error PNG boolean \n"); break;
                         }
                     }
-        });
-                    
+                    });
                     panel.add(button);
                 }
             }
@@ -91,6 +99,7 @@ public class DisplaySpeak extends JFrame{
         this.setVisible(true);
     }
 
+    // This section is only boolean function to know if the player spoke with a character
     public Boolean[] getListOfBoolean() {
         return listOfBoolean;
     }

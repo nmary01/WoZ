@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package display;
 
 import core.Item;
@@ -11,15 +7,24 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-/**
+/*
+ * This class allow users to see all objects in a room
+ * these object are listed in the main frame in the form of button
+ * the user click on the item and he is directly imported in his inventory
  *
- * @author Nathan
+ * @author WoZGrp4
  */
 public class DisplayTake extends JFrame {
 
     private JPanel panel;
     //private Display display;
 
+    /**
+     * Call the main class for display to add on the frame the list of item in the room
+     * 
+     * @param display
+     * @throws HeadlessException 
+     */
     public DisplayTake(Display display) throws HeadlessException {
         //this.display = display;
         DisplayTake d = this;
@@ -29,7 +34,12 @@ public class DisplayTake extends JFrame {
         this.setLayout(new FlowLayout());
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        
+        // get all object in the room
+        // send a message if no any object is in the room
         if (!display.getG().getCurrent().getListOfItems().isEmpty()) {
+           
+            // we create a list of button with each item
             for (Item i : display.getG().getCurrent().getListOfItems()) {
                 JButton button = new JButton(i.getName());
                 button.addActionListener(new ActionListener() {

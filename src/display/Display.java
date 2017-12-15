@@ -9,6 +9,7 @@ import javax.swing.text.DefaultCaret;
 
 /**
  * This class represent the display of the game
+ * You will find the frame, the buttons, the characters, the menu
  *
  * @author (WOZGrp4)
  * @version (30/11/2017)
@@ -37,13 +38,17 @@ public class Display extends JFrame {
     //private Image img;
 
     /**
-     * Constructeur d'objets de classe Display
+     * Constructor for the class display
      */
     public Display(Game g) {
         this.g = g;
-        //text = "Welcome to the WOLOLO World. J'ai décidé de parler français parce que c'est plus simple pour tout le monde. Alors la, comme tu peux le voir, l'interface est pas terminée mais ca avance peu à peu. Peut-être qu'un jour elle sera focntionnelle";
     }
 
+    /**
+     * Generate the display of the game with all interface elements that the user need to play the game
+     * 
+     * @param g Game
+     */
     public void generateDisplay(Game g) {
 
         //step1_done = false;
@@ -75,7 +80,7 @@ public class Display extends JFrame {
         menuBar.add(menu5);
 
         // JPanel
-        //Partie de Gauche
+        //Left part
         display = new JPanel(); // Partie Image et Interaction
         display.setLayout(new BoxLayout(display, BoxLayout.Y_AXIS));
 
@@ -99,7 +104,7 @@ public class Display extends JFrame {
         action = new JPanel(); // comprend tous les boutons suivant : examiner, prendre, oui, use, parler
         action.setLayout(new BoxLayout(action, BoxLayout.Y_AXIS));
 
-        //Partie de Droite
+        //Right part
         player = new JPanel(); // Partie inventaire, moves et diary_hp
         player.setLayout(new GridLayout(3, 1));
 
@@ -123,12 +128,13 @@ public class Display extends JFrame {
         diary_hp.setLayout(new GridLayout(2, 1));
         diary_hp.setBorder(BorderFactory.createTitledBorder("Information"));
 
-        // boutons
+        // buttons
         // interactions
         examiner = new JButton("Examine");
         examiner.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
 
+                // first step of the game
                 step1();
                 if (!step1_done) {
                     exam_step1 = true;
@@ -572,6 +578,13 @@ public class Display extends JFrame {
         this.setVisible(true);
     }
 
+    /**
+     * In the game some doors are locked
+     * if it's the case you cannot click on the button to go on this direction
+     * To know if a door is lock we call the class Exit
+     * 
+     * @param g 
+     */
     public void setMoveButtons(Game g) {
         nord.setEnabled(false);
         sud.setEnabled(false);
@@ -607,6 +620,13 @@ public class Display extends JFrame {
         }
     }
 
+    /**
+     * This method creates a textarea to display all action made during the game
+     * Action are saved in the textArea
+     * The player can choose to scroll on the text to see old actions
+     * 
+     * @param s 
+     */
     public void setTextArea(String s) {
         textArea = new JTextArea(s);
         textArea.setLineWrap(true);
@@ -619,6 +639,12 @@ public class Display extends JFrame {
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
     }
 
+    /**
+     * This method get all items in the inventory of the player
+     * 
+     * @param g
+     * @return all the items
+     */
     public JPanel getItems(Game g) {
         JPanel items = new JPanel();
         items.setLayout(new GridLayout(2, 2));
@@ -640,6 +666,13 @@ public class Display extends JFrame {
         return items;
     }
 
+    /**
+     * This method allow to display all pictures for each character 
+     * Pictures are display in the background
+     * 
+     * @param g
+     * @return the background
+     */
     public BufferedImage displayRoom(Game g) {
 
         ImageIcon icon = new ImageIcon(getClass().getResource(g.getCurrent().getImage()));
@@ -677,6 +710,12 @@ public class Display extends JFrame {
         return background;
     }
 
+    /**
+     * This method is used to remove the interface when the player move to another room
+     * The background is removed and the new background is display
+     * 
+     * @param g 
+     */
     public void deplacement(Game g) {
         
         remove(image);
@@ -695,7 +734,12 @@ public class Display extends JFrame {
         generateDisplay(g);
         System.out.println(g.getCurrent().isExamined());
     }
-
+    
+    /**
+     * This function is used to refresh the player and the direction that he can take
+     * 
+     * @param g 
+     */
     public void updatePlayer(Game g) {
         remove(moves);
         remove(direction);
@@ -705,19 +749,37 @@ public class Display extends JFrame {
         background = displayRoom(g);
         generateDisplay(g);
     }
-
+    
+    /**
+     * Getter to know the entire game
+     * 
+     * @return the game
+     */
     public Game getG() {
         return g;
     }
 
+    /**
+     * Getter to display the text area
+     * 
+     * @return 
+     */
     public JTextArea getTextArea() {
         return textArea;
     }
 
+    /**
+     * Getter to know if the display speak
+     * 
+     * @return 
+     */
     public DisplaySpeak getDisplaySpeak() {
         return displaySpeak;
     }
 
+    /**
+     * 
+     */
     public void step1() {
         boolean speakToAll = true;
         for (boolean b : displaySpeak.getListOfBoolean()) {
@@ -733,22 +795,47 @@ public class Display extends JFrame {
         }
     }
 
+    /**
+     * Setter to modify the boolean for the step4
+     * 
+     * @return 
+     */
     public static boolean isStep4_done() {
         return step4_done;
     }
 
+    /**
+     * Getter to know if the step4 is done
+     * 
+     * @param step4_done 
+     */
     public static void setStep4_done(boolean step4_done) {
         Display.step4_done = step4_done;
     }
 
+    /**
+     * Setter to modify the boolean for the step5
+     * 
+     * @return boolean step5_done
+     */
     public static boolean isStep5_done() {
         return step5_done;
     }
 
+    /**
+     * Getter to know if the step5 is done
+     * 
+     * @param step5_done 
+     */
     public static void setStep5_done(boolean step5_done) {
         Display.step5_done = step5_done;
     }
 
+    /**
+     * Getter to know if the step7 is done
+     * 
+     * @param step7_done 
+     */
     public static void setStep7_done(boolean step7_done) {
         Display.step7_done = step7_done;
     }

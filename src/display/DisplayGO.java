@@ -1,11 +1,20 @@
 package display;
 
-import java.awt.*;
 import java.util.concurrent.TimeUnit;
 import javax.swing.*;
 
+/**
+ * This class is used when the player loose the game
+ * The main frame is closed and leave the place to another one with a game over message
+ * 
+ * @author WoZGrp4
+ */
 public class DisplayGO extends JFrame {
 
+        /**
+         * Main method of this class
+         * manage the new frame with the picture
+         */
 	public DisplayGO(){
 		
         //JFrame frame = new JFrame("Among Us");

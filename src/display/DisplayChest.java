@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package display;
 
 import core.Item;
@@ -12,12 +7,21 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
- *
- * @author Nathan
+ * This class allows user to enter the code to open a chest
+ * A window is opened and the code entered by the player is compared to the real code 
+ * 
+ * @author WoZGrp4
  */
 public class DisplayChest extends JFrame {
     
-    
+    /**
+     * The displayChest call the main class Display
+     * A little window appears to enter the code
+     * You have to put your code into the textarea and to validate it
+     * 
+     * @param d Display
+     * @throws HeadlessException 
+     */
     public DisplayChest(Display d) throws HeadlessException {
         
         DisplayChest dc = this;
