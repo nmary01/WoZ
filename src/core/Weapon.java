@@ -7,10 +7,11 @@ import java.util.*;
  * - a name (3+ characters)
  * - a description (5+ characters)
  * - damage (positive)
- * - accuracy (positive <= 100)
+ * - accuracy (positive <= 100);
+ * This class is a subclass of Item class
  *
  * @author (Grp4WoZ)
- * @version (20/11/2017)
+ * @version (14/12/2017)
  */
 
 
@@ -37,6 +38,7 @@ public class Weapon extends Item
     
     /**
      * Getter for Weapon damages
+     * @return return the damage that the weapon gives
      */
     public int getDamage()
     {
@@ -45,6 +47,7 @@ public class Weapon extends Item
     
     /**
      * Getter for Accuracy damages
+     * @return return the accuracy of the weapon
      */
     public int getAccuracy()
     {
