@@ -17,8 +17,8 @@ public class Player
     private boolean armed; // true when the player has a weapon
     //private ArrayList <String> diary; // Each string is a summary of previous key-moments
     private boolean isValid; //true when all fields of the objects are correct
-    private int nbItemInInventory; //
-    private static int sizeInventory =4; //
+    private int nbItemInInventory; //number of items in the inventory
+    private static int sizeInventory =4; //size of the inventory. The player can take 4 items in his inventory.
     
     
     /**
@@ -47,6 +47,7 @@ public class Player
     
     /**
      * Setter for healthPoints
+     * @param i   number of health points
      */
     public void setHP(int i)
     {
@@ -252,18 +253,34 @@ public class Player
         return false;
     }
 
+    /**
+     * 
+     * @return the inventory of the player.
+     */
     public ArrayList<Item> getInventory() {
         return inventory;
     }
 
+    /**
+     * 
+     * @return the number of items in the inventory. 
+     */
     public int getNbItemInInventory() {
         return nbItemInInventory;
     }
 
+    /**
+     * Modify the number of items in the inventory.
+     * @param nbItemInInventory    new number of items in the inventory.
+     */
     public void setNbItemInInventory(int nbItemInInventory) {
         this.nbItemInInventory = nbItemInInventory;
     }
 
+    /**
+     * 
+     * @param armed     modify the fact that the player is armed
+     */
     public void setArmed(boolean armed) {
         this.armed = armed;
     }
