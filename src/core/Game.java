@@ -4,45 +4,51 @@ import display.Display;
 import java.util.ArrayList;
 
 /**
- *  This class is the main class of the "World of Zuul" application. 
- *  "World of Zuul" is a very simple, text based adventure game.  Users 
- *  can walk around some scenery. That's all. It should really be extended 
- *  to make it more interesting!
+ *  This class is the Game class of the "World of Zuul" application. 
+ *  This class allows to create the objects mandatory for the game:
+ * - the rooms
+ * - the PNG
+ * - the items
+ * It allows the player to move from one room to another
  * 
- *  To play this game, create an instance of this class and call the "play"
- *  method.
- * 
- *  This main class creates and initialises all the others: it creates all
- *  rooms, creates the parser and starts the game.  It also evaluates and
- *  executes the commands that the parser returns.
- * 
- * @author  Michael Kolling and David J. Barnes modified by group3
- * @version 2006.03.30
+ * @author  WoZGrp4
+ * @version 15/12/2017
  */
 
 public class Game 
 {
-    private Parser parser;
+    //private Parser parser;
+    
+    //Declaration of different rooms
     private Room currentRoom;
     private Room anteroom,ritualroom,cellar;
     private Room hall,banquetinghall,dancingroom,poolroom,kitchen,garden,well,gardenerhut; 
     private Room livingroom,library,laboratory,corridor,bedroom,guestbedroom,bathroom;
     private Room attic;
+    
+    //Declaration of PNG: neutrals, allies or enemies
     private Neutral mr_Taylor, ms_Taylor, ms_Cunningham;
     private Ally chambermaid, bob_Taylor, mr_Cunningham, ms_Wellington;
     private Enemy valet, caretaker, mr_Wellington, nina_Taylor, ghost, statue, rat_bear; 
+    
+    //Declaration of the player
     private Player player;
+    
+    //Declaration of items: classic items, potions, weapons, keys
     private Item necklace_red, gramophone, candelar;
     private Potion potion2HP, potion6HP;
     private Weapon halberd, set_of_forks_and_knives;
     private Keys bedroomkey;
+    
+    //Declaration of the list of PNG
     private ArrayList<PNG> listOfPNG;
+    
     /** 
      * Create the game and initialise its internal map.
      */
     public Game() 
     {
-        parser = new Parser();
+        //parser = new Parser();
     }
 
     /**
@@ -129,7 +135,10 @@ public class Game
         //currentRoom = poolroom;  // start game outside
         currentRoom = poolroom;
     }
-
+    
+    /**
+     * This method creates the different characters: player, neutrals, allies and enemies. And add them in the listOfPNG
+     */
     public void createCharacters()
     {
         player = new Player("player");
@@ -175,6 +184,10 @@ public class Game
         
         
     }
+    
+    /**
+     * This method creates the different items: items, keys, potions, weapons. And put them in the right room.
+     */
      public void createItem()
     {
         // items in poolroom //
@@ -283,8 +296,8 @@ public class Game
         printWelcome();
 
         player = new Player("player");
-        Boolean exam;
-        exam = false;
+        /*Boolean exam;
+        exam = false;*/
         /* player.addItem(necklace_red);
         player.addItem(halberd);
         player.addItem(set_of_forks_and_knives);
@@ -293,7 +306,7 @@ public class Game
         player.addItem(bedroomkey);*/
 
         // Step 1 : start in the poolroom //
-        Boolean step1Finish;
+        /*Boolean step1Finish;
         Boolean step2Finish;
         Boolean step3Finish;
         Boolean step4Finish;
@@ -728,7 +741,7 @@ public class Game
             finished = processCommand(command);
         }
         System.out.println("Thank you for playing.  Good bye.");
-                                                             */
+                                                             
                                                         }
                                                     }
                                                 }
@@ -741,7 +754,7 @@ public class Game
                     }
                 }
             }
-        }
+        }*/
     }
     
     
@@ -763,8 +776,7 @@ public class Game
     
      /**
      * Print out the opening message for the player.
-     */
-    
+     */   
     private void printWelcome()
     {
         System.out.println();
@@ -785,7 +797,7 @@ public class Game
      * @param command The command to be processed.
      * @return true If the command ends the game, false otherwise.
      */
-    private boolean processCommand(Command command) 
+    /*private boolean processCommand(Command command) 
     {
         boolean wantToQuit = false;
 
@@ -803,7 +815,7 @@ public class Game
             wantToQuit = quit(command);
 
         return wantToQuit;
-    }
+    }*/
 
     // implementations of user commands:
 
@@ -812,14 +824,14 @@ public class Game
      * Here we print some stupid, cryptic message and a list of the 
      * command words.
      */
-    public void printHelp() 
+    /*public void printHelp() 
     {
         System.out.println("You are lost. You are alone. You wander");
         System.out.println("around at the university.");
         System.out.println();
         System.out.println("Your command words are:");
         System.out.println("   go quit help");
-    }
+    }*/
 
     /** 
      * Try to go to one direction. If there is an exit, enter
@@ -862,7 +874,7 @@ public class Game
      * whether we really quit the game.
      * @return true, if this command quits the game, false otherwise.
      */
-    public boolean quit(Command command) 
+    /*public boolean quit(Command command) 
     {
         if(command.hasSecondWord()) {
             System.out.println("Quit what?");
@@ -871,110 +883,214 @@ public class Game
         else {
             return true;  // signal that we want to quit
         }
-    }
+    }*/
     
+    /**
+     * Getter of the current room
+     * @return Room the current room
+     */
     public Room getCurrent()
     {
         return currentRoom;
     }
     
+    /**
+     * Getter of the player
+     * @return Player the player
+     */
     public Player getPlayer()
     {
         return player;
     }
-
+    
+    /**
+     * Getter of the list of PNG instanciated
+     * @return ArrayList of PNG
+     */
     public ArrayList<PNG> getListOfPNG() {
         return listOfPNG;
     }
-
+    
+    /**
+     * Getter of the anteroom
+     * @return Room the anteroom
+     */
     public Room getAnteroom() {
         return anteroom;
     }
 
+    /**
+     * Getter of the ritualroom
+     * @return Room the ritualroom
+     */
     public Room getRitualroom() {
         return ritualroom;
     }
 
+    /**
+     * Getter of the cellar
+     * @return Room the cellar
+     */
     public Room getCellar() {
         return cellar;
     }
 
+    /**
+     * Getter of the hall
+     * @return Room the hall
+     */
     public Room getHall() {
         return hall;
     }
 
+    /**
+     * Getter of the banqueting hall
+     * @return Room the Banqueting Hall
+     */
     public Room getBanquetinghall() {
         return banquetinghall;
     }
 
+    /**
+     * Getter of the dancing room
+     * @return Room the Dancing Room
+     */
     public Room getDancingroom() {
         return dancingroom;
     }
 
+    /**
+     * Getter of the poolroom
+     * @return Room the Poolroom
+     */
     public Room getPoolroom() {
         return poolroom;
     }
 
+    /**
+     * Getter of the kitchen
+     * @return Room the Kitchen
+     */
     public Room getKitchen() {
         return kitchen;
     }
 
+    /**
+     * Getter of the garden
+     * @return Room the Garden
+     */
     public Room getGarden() {
         return garden;
     }
 
+    /**
+     * Getter of the well
+     * @return Room the Well
+     */
     public Room getWell() {
         return well;
     }
 
+    /**
+     * Getter of the gardener hut
+     * @return Room the GardenerHut
+     */
     public Room getGardenerhut() {
         return gardenerhut;
     }
 
+    /**
+     * Getter of the living room
+     * @return Room the LivingRoom
+     */
     public Room getLivingroom() {
         return livingroom;
     }
-
+    
+    /**
+     * Getter of the library
+     * @return Room the Library
+     */
     public Room getLibrary() {
         return library;
     }
 
+    /**
+     * Getter of the laboratory
+     * @return Room the Laboratory
+     */
     public Room getLaboratory() {
         return laboratory;
     }
 
+    /**
+     * Getter of the corridor
+     * @return Room the Corridor
+     */
     public Room getCorridor() {
         return corridor;
     }
 
+    /**
+     * Getter of the bedroom
+     * @return Room the Bedroom
+     */
     public Room getBedroom() {
         return bedroom;
     }
 
+    /**
+     * Getter of the guest room
+     * @return Room the GuestRoom
+     */
     public Room getGuestbedroom() {
         return guestbedroom;
     }
 
+    /**
+     * Getter of the bathroom
+     * @return Room the Bathroom
+     */
     public Room getBathroom() {
         return bathroom;
     }
 
+    /**
+     * Getter of the attic
+     * @return Room the Attic
+     */
     public Room getAttic() {
         return attic;
     }
 
+    /**
+     * Getter of the ghost
+     * @return Enemy the Ghost
+     */
     public Enemy getGhost() {
         return ghost;
     }
 
+    /**
+     * Setter of the currentRoom
+     * @param currentRoom the room where is the player
+     */
     public void setCurrentRoom(Room currentRoom) {
         this.currentRoom = currentRoom;
     }
 
+    /**
+     * Getter of the statue
+     * @return Enemy the Statue
+     */
     public Enemy getStatue() {
         return statue;
     }
 
+    /**
+     * Getter of the rat bear
+     * @return Enemy the Rat_bear
+     */
     public Enemy getRat_bear() {
         return rat_bear;
     }
