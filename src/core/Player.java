@@ -3,7 +3,7 @@ package core;
 import java.util.ArrayList;
 /**
  * This class represent a player
- * A player has a name, a number of healthpoints, a diary and an inventory
+ * A player has a name, a number of healthpoints and an inventory
  * He can be armed and the inventory can have 4 items max
  *
  * @author (WoZGrp4)
@@ -15,14 +15,15 @@ public class Player
     private int healthPoints; //HP of the player : >= 0
     private ArrayList <Item> inventory; //inventory of the player : 4 items max, including only 1 weapon
     private boolean armed; // true when the player has a weapon
-    private ArrayList <String> diary; // Each string is a summary of previous key-moments
+    //private ArrayList <String> diary; // Each string is a summary of previous key-moments
     private boolean isValid; //true when all fields of the objects are correct
     private int nbItemInInventory; //
     private static int sizeInventory =4; //
     
     
     /**
-     * Constructeur d'objets de classe Player
+     * Objects constructor of the class Player
+     * @param String name   name of the player
      */
     public Player(String name)
     {
