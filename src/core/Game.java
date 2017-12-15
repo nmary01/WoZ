@@ -58,32 +58,32 @@ public class Game
     {  
         // create the rooms
             //RDC//
-        hall = new Room("Hall", "..\\pictures\\Rooms\\hall.png");
-        banquetinghall = new Room ("Banqueting hall", "..\\pictures\\Rooms\\banquet.png");
-        poolroom = new Room ("PoolRoom", "..\\pictures\\Rooms\\billard.png");
-        dancingroom = new Room ("Dancing Room", "..\\pictures\\Rooms\\bal.png");
-        kitchen = new Room("Kitchen", "..\\pictures\\Rooms\\cuisine.png");
-        garden = new Room("Garden","..\\pictures\\Rooms\\garden.png");
-        well = new Room("Well", "..\\pictures\\Rooms\\well.png");
-        gardenerhut = new Room("Gardener hut", "..\\pictures\\Rooms\\hut.png");
+        hall = new Room("Hall", "/Rooms/hall.png");
+        banquetinghall = new Room ("Banqueting hall", "/Rooms/banquet.png");
+        poolroom = new Room ("PoolRoom", "/Rooms/billard.png");
+        dancingroom = new Room ("Dancing Room", "/Rooms/bal.png");
+        kitchen = new Room("Kitchen", "/Rooms/cuisine.png");
+        garden = new Room("Garden","/Rooms/garden.png");
+        well = new Room("Well", "/Rooms/well.png");
+        gardenerhut = new Room("Gardener hut", "/Rooms/hut.png");
             //Fin RDN //
             
             //-1//
-        anteroom = new Room("Anteroom", "..\\pictures\\Rooms\\anteroom.png");
-        ritualroom = new Room("Ritual Room", "..\\pictures\\Rooms\\ritualroom.png");
-        cellar = new Room("Cellar", "..\\pictures\\Rooms\\cave.png");
+        anteroom = new Room("Anteroom", "/Rooms/anteroom.png");
+        ritualroom = new Room("Ritual Room", "/Rooms/ritualroom.png");
+        cellar = new Room("Cellar", "/Rooms/cave.png");
             // FIN -1//
             // +1 //
-        livingroom = new Room("Living Room", "..\\pictures\\Rooms\\salon.png"); 
-        library = new Room ("Library", "..\\pictures\\Rooms\\bibliotheque.png");
-        laboratory = new Room("Laboratory", "..\\pictures\\Rooms\\laboratory.png");
-        corridor= new Room("Corridor", "..\\pictures\\Rooms\\couloir.png");
-        bathroom = new Room("Bathroom", "..\\pictures\\Rooms\\salledebain.png");
-        bedroom = new Room("Bedroom", "..\\pictures\\Rooms\\chambre1.png");
-        guestbedroom = new Room("Guest Bedroom", "..\\pictures\\Rooms\\chambre2.png"); 
+        livingroom = new Room("Living Room", "/Rooms/salon.png"); 
+        library = new Room ("Library", "/Rooms/bibliotheque.png");
+        laboratory = new Room("Laboratory", "/Rooms/laboratory.png");
+        corridor= new Room("Corridor", "/Rooms/couloir.png");
+        bathroom = new Room("Bathroom", "/Rooms/salledebain.png");
+        bedroom = new Room("Bedroom", "/Rooms/chambre1.png");
+        guestbedroom = new Room("Guest Bedroom", "/Rooms/chambre2.png"); 
             //FIN +1 //
             //+2//
-        attic = new Room("Attic", "..\\pictures\\Rooms\\grenier.png");
+        attic = new Room("Attic", "/Rooms/grenier.png");
             //Fin +2//
         //Fin create room //    
             
@@ -151,24 +151,24 @@ public class Game
         Item item_ms_Wellington = new Item("Ring", "This is the wedding ring");
         
         // Neutral characters creation //
-        mr_Taylor = new Neutral("Mr Taylor"," ", poolroom, "..\\pictures\\Characters\\MrTaylor2.png");
-        ms_Taylor = new Neutral("Ms Taylor","Oh no ! My poor husband is dead ! What am I going to do now ?!", poolroom, "..\\pictures\\Characters\\MsTaylor2.png");
-        ms_Cunningham = new Neutral("Ms Cunningham","My husband was the best old friend of Mr Taylor", poolroom, "..\\pictures\\Characters\\MsCunningham2.png");
+        mr_Taylor = new Neutral("Mr Taylor"," ", poolroom, "/Characters/MrTaylor2.png");
+        ms_Taylor = new Neutral("Ms Taylor","Oh no ! My poor husband is dead ! What am I going to do now ?!", poolroom, "/Characters/MsTaylor2.png");
+        ms_Cunningham = new Neutral("Ms Cunningham","My husband was the best old friend of Mr Taylor", poolroom, "/Characters/MsCunningham2.png");
         
         // Ally characters creation //
-        chambermaid = new Ally("Chambermaid","I was in the dancing room to serve the guests.I was not with the master", poolroom, item_chambermaid, "..\\pictures\\Characters\\Chambermaid.png");
-        bob_Taylor = new Ally("Bob Taylor","What happened to my father ? ", poolroom, item_bob_taylor, "..\\pictures\\Characters\\BobTaylor2.png");
-        mr_Cunningham = new Ally("Mr Cunningham", "I was in my bedroom when I heard someone screaming. So I went down stairs quickly", poolroom, item_mr_Cunningham, "..\\pictures\\Characters\\MrCunningham2.png");
-        ms_Wellington = new Ally("Ms Wellington", "I was in the dancing room with my husband. The chambermaid served us.", poolroom, item_ms_Wellington, "..\\pictures\\Characters\\MsWellington2.png");
+        chambermaid = new Ally("Chambermaid","I was in the dancing room to serve the guests.I was not with the master", poolroom, item_chambermaid, "/Characters/Chambermaid.png");
+        bob_Taylor = new Ally("Bob Taylor","What happened to my father ? ", poolroom, item_bob_taylor, "/Characters/BobTaylor2.png");
+        mr_Cunningham = new Ally("Mr Cunningham", "I was in my bedroom when I heard someone screaming. So I went down stairs quickly", poolroom, item_mr_Cunningham, "/Characters/MrCunningham2.png");
+        ms_Wellington = new Ally("Ms Wellington", "I was in the dancing room with my husband. The chambermaid served us.", poolroom, item_ms_Wellington, "/Characters/MsWellington2.png");
         
         // Enemy characters ceration //
-        valet = new Enemy("Valet","I was in the kitchen. I checked the wine delivery", poolroom,4,80,12,"..\\pictures\\Characters\\valet.png"); // damage =4 accuraccy = 80, HP=12
-        caretaker = new Enemy("Caretaker","I was in my hut to repair the fork",poolroom, 2,20,5, "..\\pictures\\Characters\\caretaker.png"); // damage =2 accuraccy = 20, HP=5
-        mr_Wellington = new Enemy("Mr Wellington","I was in the dancing room with my wife", poolroom, 1,10,7, "..\\pictures\\Characters\\MrWellington2.png"); // damage =1 accuraccy = 10, HP=7
-        nina_Taylor = new Enemy("Nina Taylor", "I was in the library and I read a good book", poolroom, 2, 30, 8,"..\\pictures\\Characters\\NinaTaylor2.png"); // damage =2 accuraccy = 30, HP=8
-        statue = new Enemy("Statue", "I was in the corridor", corridor, 5, 15, 2,"..\\pictures\\Characters\\Statue.png"); // damage =2 accuraccy = 30, HP=8
-        rat_bear = new Enemy("Rat / Bear", "I was in the ritual room", anteroom, 10, 20, 6,"..\\pictures\\Characters\\Rat_bear.png");
-        ghost = new Enemy("Casper the Ghost", "A little green ghost", livingroom, 1, 50, 4, "..\\pictures\\Characters\\ghost.png");
+        valet = new Enemy("Valet","I was in the kitchen. I checked the wine delivery", poolroom,4,80,12,"/Characters/valet.png"); // damage =4 accuraccy = 80, HP=12
+        caretaker = new Enemy("Caretaker","I was in my hut to repair the fork",poolroom, 2,20,5, "/Characters/caretaker.png"); // damage =2 accuraccy = 20, HP=5
+        mr_Wellington = new Enemy("Mr Wellington","I was in the dancing room with my wife", poolroom, 1,10,7, "/Characters/MrWellington2.png"); // damage =1 accuraccy = 10, HP=7
+        nina_Taylor = new Enemy("Nina Taylor", "I was in the library and I read a good book", poolroom, 2, 30, 8,"/Characters/NinaTaylor2.png"); // damage =2 accuraccy = 30, HP=8
+        statue = new Enemy("Statue", "I was in the corridor", corridor, 5, 15, 2,"/Characters/Statue.png"); // damage =2 accuraccy = 30, HP=8
+        rat_bear = new Enemy("Rat / Bear", "I was in the ritual room", anteroom, 10, 20, 6,"/Characters/Rat_bear.png");
+        ghost = new Enemy("Casper the Ghost", "A little green ghost", livingroom, 1, 50, 4, "/Characters/ghost.png");
         
         listOfPNG = new ArrayList();
         listOfPNG.add(ms_Taylor);

@@ -18,8 +18,8 @@ public class Main {
     public static void main(String[] args) {
         Game g = new Game();
         //For the fight
-        Room poolroom = new Room ("PoolRoom", "..\\pictures\\Rooms\\billard.png");
-        Enemy mr_Wellington = new Enemy("Mr Wellington","I was in the dancing room with my wife", poolroom, 8,100,60, null);
+        //Room poolroom = new Room ("PoolRoom", "..\\pictures\\Rooms\\billard.png");
+        //Enemy mr_Wellington = new Enemy("Mr Wellington","I was in the dancing room with my wife", poolroom, 8,100,60, null);
         //
         
         g.createRooms();
