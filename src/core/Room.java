@@ -9,7 +9,7 @@ import java.util.*;
  *
  * A "Room" represents one location in the scenery of the game.  It is 
  * connected to other rooms via exits.  The exits are labelled north, 
- * east, south, west.  For each direction, the room stores a reference
+ * east, south, west, upstairs, downstairs.  For each direction, the room stores a reference
  * to the neighboring room, or null if there is no exit in that direction.
  * 
  * @author  (WoZGrp4)
@@ -20,11 +20,14 @@ import java.util.*;
 
 public class Room 
 {
-    //Description of the room
+    //Description of the room and room's picture
     private String description, image;
     //The map of exits of the room.
     private List<Exit> mapRoom;
+    //List of items of the room
     private List<Item> listOfItems;
+    //Boolean examined : if the room is examined by the player
+    //Boolean isValid : 
     private boolean isValid, examined;
     
     /**
@@ -32,6 +35,7 @@ public class Room
      * no exits. "description" is something like "a kitchen" or
      * "an open court yard".
      * @param description The room's description.
+     * @param image the room's picture.
      */
     public Room(String description, String image) 
     {
@@ -46,7 +50,10 @@ public class Room
     /**
      * Define the exits of this room.  Every direction either leads
      * to another room or is null (no exit there).
-     * @param north The north exit.
+     * @param direction direction of the exit
+     * @param room room that the player can go inside
+     * @param boolean opened if the exit is locked or not
+     * @param textBlock text which informs the player if the exit is locked
      */
     public void setExits(String direction, Room room, boolean opened, String textBlock) 
     {
@@ -54,6 +61,7 @@ public class Room
     }
 
     /**
+     * Accessor for the description
      * @return The description of the room.
      */
     public String getDescription()
@@ -74,7 +82,7 @@ public class Room
     
     /**
      * Method addItem
-     *
+     * Add an item in the room
      * @param i an item to add in the room
      */
     public void addItem(Item i){
@@ -93,7 +101,7 @@ public class Room
     
     /**
      * Method modifyExit
-     * @param The direction we want to modify
+     * @param direction The direction we want to modify
      */
     public void modifyExit(String direction)
     {
@@ -114,15 +122,27 @@ public class Room
         else{return false;}
     }
     
+    /**
+     * Accessor for the room's image
+     * @return room's picture
+     */
     public String getImage()
     {
         return image;
     }
 
+    /**
+     * 
+     * @return the boolean examined
+     */
     public boolean isExamined() {
         return examined;
     }
 
+    /**
+     * 
+     * @param examined 
+     */
     public void setExamined(boolean examined) {
         this.examined = examined;
     }
