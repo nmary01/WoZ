@@ -3,9 +3,10 @@ package core;
 
 /**
  * Class Item creates items with a name (3+ characters) and a description (5+ characters)
- *
+ *  
+ * isValid boolean is used for Item class test
  * @author (WoZGrp4)
- * @version (20/11/2017)
+ * @version (14/12/2017)
  */
 public class Item
 {
