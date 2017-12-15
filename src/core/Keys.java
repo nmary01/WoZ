@@ -2,11 +2,12 @@ package core;
 
 
 /**
- * Class represent a keys
- * a keys is represented by a name, a description and a room
+ * Class represents a keys
+ * A keys is represented by a name, a description and an exit
+ * This class is a subclass of Item class
  *
  * @author (WOZGrp4)
- * @version (20/11/2017)
+ * @version (14/12/2017)
  */
 public class Keys extends Item
 {
@@ -14,6 +15,9 @@ public class Keys extends Item
 
     /**
      * Constructor for objects of class Keys
+     * @param consoName is the name of the key;
+     * @param consoDescription is the descritpion of the key object;
+     * @param exit is the exit which is opened with this key ;
      */
     public Keys(String consoName, String consoDescription, Exit exit)
     {
